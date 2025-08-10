@@ -497,9 +497,20 @@
 
         .portfolio-image {
             height: 250px;
-            background: var(--gradient-primary);
             position: relative;
             overflow: hidden;
+            background: var(--gradient-primary);
+        }
+
+        .portfolio-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .portfolio-item:hover .portfolio-image img {
+            transform: scale(1.05);
         }
 
         .portfolio-image::before {
@@ -527,6 +538,7 @@
             text-align: center;
             opacity: 0;
             transition: opacity 0.3s ease;
+            z-index: 2;
         }
 
         .portfolio-item:hover .portfolio-overlay {
@@ -635,10 +647,21 @@
 
         .gallery-image {
             height: 280px;
-            background: var(--gradient-primary);
             position: relative;
             overflow: hidden;
             cursor: pointer;
+            background: var(--gradient-primary);
+        }
+
+        .gallery-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-image img {
+            transform: scale(1.1);
         }
 
         .gallery-image::after {
@@ -658,6 +681,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            z-index: 2;
         }
 
         .gallery-item:hover .gallery-image::after {
@@ -679,6 +703,31 @@
             color: var(--text-light);
             font-size: 0.9rem;
             line-height: 1.6;
+        }
+
+        /* Placeholder styling for missing images */
+        .image-placeholder {
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .image-placeholder-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.7;
+        }
+
+        .image-placeholder-text {
+            text-align: center;
+            opacity: 0.8;
         }
 
         /* Enhanced About Section */
@@ -1264,6 +1313,7 @@
                 <!-- TV Commercials -->
                 <div class="portfolio-item" data-category="commercials">
                     <div class="portfolio-image">
+                        <img src="assets/photo1.jpg" alt="Lipton Ceylon Tea Commercial" onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>📸</div><div class=&quot;image-placeholder-text&quot;>Lipton Ceylon Tea<br>Commercial Photo</div></div>'">
                         <div class="portfolio-overlay">
                             <h4>View Project</h4>
                         </div>
@@ -1282,6 +1332,7 @@
 
                 <div class="portfolio-item" data-category="commercials">
                     <div class="portfolio-image">
+                        <img src="assets/photo2.jpg" alt="Coca Cola Campaign" onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>📸</div><div class=&quot;image-placeholder-text&quot;>Coca Cola<br>Campaign Photo</div></div>'">
                         <div class="portfolio-overlay">
                             <h4>View Project</h4>
                         </div>
@@ -1300,6 +1351,7 @@
 
                 <div class="portfolio-item" data-category="commercials">
                     <div class="portfolio-image">
+                        <img src="assets/photo3.jpg" alt="Keells Super Commercial" onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>📸</div><div class=&quot;image-placeholder-text&quot;>Keells Super<br>Commercial Photo</div></div>'">
                         <div class="portfolio-overlay">
                             <h4>View Project</h4>
                         </div>
@@ -1319,6 +1371,7 @@
                 <!-- Films -->
                 <div class="portfolio-item" data-category="films">
                     <div class="portfolio-image">
+                        <img src="assets/photo4.jpg" alt="Adaraneeya Wassanaya Film" onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>🎬</div><div class=&quot;image-placeholder-text&quot;>Adaraneeya Wassanaya<br>Film Production</div></div>'">
                         <div class="portfolio-overlay">
                             <h4>View Project</h4>
                         </div>
@@ -1337,6 +1390,7 @@
 
                 <div class="portfolio-item" data-category="films">
                     <div class="portfolio-image">
+                        <img src="assets/photo5.jpg" alt="Heart FM Production" onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>📻</div><div class=&quot;image-placeholder-text&quot;>Heart FM<br>Production Photo</div></div>'">
                         <div class="portfolio-overlay">
                             <h4>View Project</h4>
                         </div>
@@ -1356,6 +1410,7 @@
                 <!-- Teledramas -->
                 <div class="portfolio-item" data-category="teledramas">
                     <div class="portfolio-image">
+                        <img src="assets/photo6.jpg" alt="Itin Ita Passe Teledrama" onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>📺</div><div class=&quot;image-placeholder-text&quot;>Itin Ita Passe<br>Teledrama Photo</div></div>'">
                         <div class="portfolio-overlay">
                             <h4>View Project</h4>
                         </div>
@@ -1374,6 +1429,7 @@
 
                 <div class="portfolio-item" data-category="teledramas">
                     <div class="portfolio-image">
+                        <img src="assets/photo7.jpg" alt="Pahasara Teledrama" onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>📺</div><div class=&quot;image-placeholder-text&quot;>Pahasara<br>Period Drama Photo</div></div>'">
                         <div class="portfolio-overlay">
                             <h4>View Project</h4>
                         </div>
@@ -1392,6 +1448,7 @@
 
                 <div class="portfolio-item" data-category="teledramas">
                     <div class="portfolio-image">
+                        <img src="assets/photo8.jpg" alt="Bonda Meedum Teledrama" onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>📺</div><div class=&quot;image-placeholder-text&quot;>Bonda Meedum<br>Family Drama Photo</div></div>'">
                         <div class="portfolio-overlay">
                             <h4>View Project</h4>
                         </div>
@@ -1429,9 +1486,10 @@
             </div>
 
             <div class="gallery-grid" id="galleryGrid">
-                <!-- Gallery items will be populated by JavaScript -->
                 <div class="gallery-item" data-category="commercial">
-                    <div class="gallery-image"></div>
+                    <div class="gallery-image">
+                        <img src="assets/photo9.jpg" alt="Lipton Ceylon Tea Gallery" onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>📸</div><div class=&quot;image-placeholder-text&quot;>Gallery Photo 9</div></div>'">
+                    </div>
                     <div class="gallery-content">
                         <h4 class="gallery-title">Lipton Ceylon Tea</h4>
                         <p class="gallery-description">Natural beauty enhancement for brand campaign</p>
@@ -1439,7 +1497,9 @@
                 </div>
 
                 <div class="gallery-item" data-category="film">
-                    <div class="gallery-image"></div>
+                    <div class="gallery-image">
+                        <img src="assets/photo10.jpg" alt="Adaraneeya Wassanaya Gallery" onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>🎬</div><div class=&quot;image-placeholder-text&quot;>Gallery Photo 10</div></div>'">
+                    </div>
                     <div class="gallery-content">
                         <h4 class="gallery-title">Adaraneeya Wassanaya</h4>
                         <p class="gallery-description">Character development for film production</p>
@@ -1447,7 +1507,9 @@
                 </div>
 
                 <div class="gallery-item" data-category="teledrama">
-                    <div class="gallery-image"></div>
+                    <div class="gallery-image">
+                        <img src="assets/photo11.jpg" alt="Pahasara Gallery" onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>📺</div><div class=&quot;image-placeholder-text&quot;>Gallery Photo 11</div></div>'">
+                    </div>
                     <div class="gallery-content">
                         <h4 class="gallery-title">Pahasara</h4>
                         <p class="gallery-description">Period drama historical accuracy</p>
@@ -1455,7 +1517,9 @@
                 </div>
 
                 <div class="gallery-item" data-category="commercial">
-                    <div class="gallery-image"></div>
+                    <div class="gallery-image">
+                        <img src="assets/photo12.jpg" alt="Coca Cola Campaign Gallery" onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>📸</div><div class=&quot;image-placeholder-text&quot;>Gallery Photo 12</div></div>'">
+                    </div>
                     <div class="gallery-content">
                         <h4 class="gallery-title">Coca Cola Campaign</h4>
                         <p class="gallery-description">Youthful and vibrant makeup looks</p>
@@ -1463,7 +1527,9 @@
                 </div>
 
                 <div class="gallery-item" data-category="bts">
-                    <div class="gallery-image"></div>
+                    <div class="gallery-image">
+                        <img src="assets/photo13.jpg" alt="Behind the Scenes Gallery" onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>🎭</div><div class=&quot;image-placeholder-text&quot;>Gallery Photo 13</div></div>'">
+                    </div>
                     <div class="gallery-content">
                         <h4 class="gallery-title">Behind the Scenes</h4>
                         <p class="gallery-description">Makeup application process</p>
@@ -1471,7 +1537,9 @@
                 </div>
 
                 <div class="gallery-item" data-category="teledrama">
-                    <div class="gallery-image"></div>
+                    <div class="gallery-image">
+                        <img src="assets/photo14.jpg" alt="Itin Ita Passe Gallery" onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>📺</div><div class=&quot;image-placeholder-text&quot;>Gallery Photo 14</div></div>'">
+                    </div>
                     <div class="gallery-content">
                         <h4 class="gallery-title">Itin Ita Passe</h4>
                         <p class="gallery-description">Daily series makeup consistency</p>
@@ -1479,7 +1547,9 @@
                 </div>
 
                 <div class="gallery-item" data-category="film">
-                    <div class="gallery-image"></div>
+                    <div class="gallery-image">
+                        <img src="assets/photo15.jpg" alt="Heart FM Production Gallery" onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>📻</div><div class=&quot;image-placeholder-text&quot;>Gallery Photo 15</div></div>'">
+                    </div>
                     <div class="gallery-content">
                         <h4 class="gallery-title">Heart FM Production</h4>
                         <p class="gallery-description">Professional media styling</p>
@@ -1487,10 +1557,52 @@
                 </div>
 
                 <div class="gallery-item" data-category="commercial">
-                    <div class="gallery-image"></div>
+                    <div class="gallery-image">
+                        <img src="assets/photo16.jpg" alt="Keells Super Gallery" onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>📸</div><div class=&quot;image-placeholder-text&quot;>Gallery Photo 16</div></div>'">
+                    </div>
                     <div class="gallery-content">
                         <h4 class="gallery-title">Keells Super</h4>
                         <p class="gallery-description">Family-friendly commercial styling</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="bts">
+                    <div class="gallery-image">
+                        <img src="assets/photo17.jpg" alt="Makeup Process Gallery" onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>🎭</div><div class=&quot;image-placeholder-text&quot;>Gallery Photo 17</div></div>'">
+                    </div>
+                    <div class="gallery-content">
+                        <h4 class="gallery-title">Makeup Process</h4>
+                        <p class="gallery-description">Artist at work behind the scenes</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="bts">
+                    <div class="gallery-image">
+                        <img src="assets/photo18.jpg" alt="Studio Work Gallery" onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>🎭</div><div class=&quot;image-placeholder-text&quot;>Gallery Photo 18</div></div>'">
+                    </div>
+                    <div class="gallery-content">
+                        <h4 class="gallery-title">Studio Work</h4>
+                        <p class="gallery-description">Professional makeup application</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="teledrama">
+                    <div class="gallery-image">
+                        <img src="assets/photo19.jpg" alt="Character Makeup Gallery" onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>📺</div><div class=&quot;image-placeholder-text&quot;>Gallery Photo 19</div></div>'">
+                    </div>
+                    <div class="gallery-content">
+                        <h4 class="gallery-title">Character Makeup</h4>
+                        <p class="gallery-description">Detailed character transformation</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="film">
+                    <div class="gallery-image">
+                        <img src="assets/photo20.jpg" alt="Film Set Gallery" onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>🎬</div><div class=&quot;image-placeholder-text&quot;>Gallery Photo 20</div></div>'">
+                    </div>
+                    <div class="gallery-content">
+                        <h4 class="gallery-title">Film Set</h4>
+                        <p class="gallery-description">On-location makeup artistry</p>
                     </div>
                 </div>
             </div>
@@ -1882,19 +1994,6 @@
             statsObserver.observe(statsSection);
         }
 
-        // Add smooth reveal animation for text elements
-        function revealText(element) {
-            const text = element.textContent;
-            element.textContent = '';
-            element.style.opacity = '1';
-            
-            [...text].forEach((char, index) => {
-                setTimeout(() => {
-                    element.textContent += char;
-                }, index * 50);
-            });
-        }
-
         // Enhanced form validation
         const form = document.getElementById('contactForm');
         const inputs = form.querySelectorAll('input, textarea');
@@ -1960,159 +2059,6 @@
             }
         }
 
-        // Add CSS for error states
-        const errorStyles = document.createElement('style');
-        errorStyles.textContent = `
-            .form-group input.error,
-            .form-group textarea.error {
-                border-color: #ef4444 !important;
-                box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1) !important;
-            }
-            
-            .error-message {
-                color: #ef4444;
-                font-size: 0.8rem;
-                margin-top: 0.5rem;
-                animation: slideDown 0.3s ease;
-            }
-            
-            @keyframes slideDown {
-                from {
-                    opacity: 0;
-                    transform: translateY(-10px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
-            
-            /* Additional responsive improvements */
-            @media (max-width: 640px) {
-                .hero h1 {
-                    font-size: 2.5rem;
-                }
-                
-                .hero-buttons {
-                    flex-direction: column;
-                    align-items: stretch;
-                }
-                
-                .cta-button,
-                .cta-secondary {
-                    text-align: center;
-                    width: 100%;
-                }
-                
-                .portfolio-tabs,
-                .gallery-filter {
-                    flex-wrap: wrap;
-                    gap: 0.5rem;
-                }
-                
-                .tab-button,
-                .filter-button {
-                    padding: 0.6rem 1.2rem;
-                    font-size: 0.9rem;
-                }
-                
-                .stats-grid {
-                    grid-template-columns: 1fr 1fr;
-                    gap: 1rem;
-                }
-                
-                .stat-item {
-                    padding: 1.5rem 1rem;
-                }
-                
-                .contact-item {
-                    flex-direction: column;
-                    text-align: center;
-                }
-                
-                .contact-icon {
-                    margin-right: 0;
-                    margin-bottom: 1rem;
-                }
-            }
-            
-            /* Loading animation improvements */
-            .loader {
-                background: linear-gradient(135deg, #2c1810 0%, #1a1a1a 100%);
-            }
-            
-            .loader-text {
-                position: relative;
-                overflow: hidden;
-            }
-            
-            .loader-text::after {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: -100%;
-                width: 100%;
-                height: 100%;
-                background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.4), transparent);
-                animation: shimmer 2s infinite;
-            }
-            
-            @keyframes shimmer {
-                0% { left: -100%; }
-                100% { left: 100%; }
-            }
-            
-            /* Enhanced hover effects */
-            .nav-links a {
-                position: relative;
-                overflow: hidden;
-            }
-            
-            .nav-links a::before {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: -100%;
-                width: 100%;
-                height: 100%;
-                background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
-                transition: left 0.5s ease;
-            }
-            
-            .nav-links a:hover::before {
-                left: 100%;
-            }
-            
-            /* Improved button animations */
-            .cta-button,
-            .submit-btn {
-                position: relative;
-                overflow: hidden;
-                transition: all 0.3s ease;
-            }
-            
-            .cta-button::after,
-            .submit-btn::after {
-                content: '';
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                width: 0;
-                height: 0;
-                background: rgba(255, 255, 255, 0.1);
-                border-radius: 50%;
-                transform: translate(-50%, -50%);
-                transition: width 0.6s ease, height 0.6s ease;
-            }
-            
-            .cta-button:active::after,
-            .submit-btn:active::after {
-                width: 300px;
-                height: 300px;
-            }
-        `;
-        document.head.appendChild(errorStyles);
-
         // Initialize all animations and interactions
         document.addEventListener('DOMContentLoaded', () => {
             // Add initial loading state
@@ -2130,5 +2076,3 @@
     </script>
 </body>
 </html>
-
-
