@@ -1467,13 +1467,22 @@
 
             <div class="portfolio-grid" id="portfolioGrid">
                 <div class="portfolio-item" data-category="commercials">
-                    <div class="portfolio-image" onclick="openImageModal(this)">
-                        <img src="assets/photo1.jpg" alt="Lipton Ceylon Tea Commercial" data-title="Lipton Ceylon Tea" data-description="Brand commercial makeup focusing on natural beauty enhancement and authentic Sri Lankan elegance." onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>📸</div><div class=&quot;image-placeholder-text&quot;>Lipton Ceylon Tea<br>Commercial Photo</div></div>'">
-                        <div class="portfolio-overlay">
-                            <div class="view-icon">🔍</div>
-                            <h4>View Full Image</h4>
-                        </div>
-                    </div>
+                    <div class="portfolio-image" onclick="openImageModal(this)" 
+     data-title="Lipton Ceylon Tea" 
+     data-description="Brand commercial makeup focusing on natural beauty enhancement and authentic Sri Lankan elegance.">
+  
+  <video controls autoplay muted loop 
+         onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>🎥</div><div class=&quot;image-placeholder-text&quot;>Lipton Ceylon Tea<br>Commercial Video</div></div>'">
+    <source src="path_to_your_video.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+  
+  <div class="portfolio-overlay">
+      <div class="view-icon">🔍</div>
+      <h4>View Full Video</h4>
+  </div>
+</div>
+
                     <div class="portfolio-content">
                         <div class="portfolio-category">TV Commercial</div>
                         <h3 class="portfolio-title">Lipton Ceylon Tea</h3>
@@ -2256,3 +2265,4 @@
     </script>
 </body>
 </html>
+
