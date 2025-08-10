@@ -4,7 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>G. Uhanowita - Professional Makeup Artist</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary-color: #d4af37;
+            --secondary-color: #2c1810;
+            --accent-color: #f5e6d3;
+            --text-dark: #1a1a1a;
+            --text-light: #6b7280;
+            --background-light: #fefefe;
+            --background-dark: #0f0f0f;
+            --gradient-primary: linear-gradient(135deg, #d4af37 0%, #f5e6d3 100%);
+            --gradient-dark: linear-gradient(135deg, #2c1810 0%, #1a1a1a 100%);
+            --shadow-soft: 0 10px 40px rgba(0, 0, 0, 0.1);
+            --shadow-strong: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -12,25 +27,52 @@
         }
 
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Inter', sans-serif;
             line-height: 1.6;
-            color: #333;
+            color: var(--text-dark);
             overflow-x: hidden;
-            background: #ffffff;
+            background: var(--background-light);
         }
 
         /* Custom scrollbar */
         ::-webkit-scrollbar {
-            width: 8px;
+            width: 6px;
         }
 
         ::-webkit-scrollbar-track {
-            background: #f1f1f1;
+            background: rgba(0, 0, 0, 0.05);
         }
 
         ::-webkit-scrollbar-thumb {
-            background: #c4a574;
-            border-radius: 4px;
+            background: var(--primary-color);
+            border-radius: 10px;
+        }
+
+        /* Loading animation */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--background-dark);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 0.5s ease;
+        }
+
+        .loader-text {
+            color: var(--primary-color);
+            font-size: 2rem;
+            font-family: 'Playfair Display', serif;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.7; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
         }
 
         /* Navigation */
@@ -39,19 +81,20 @@
             top: 0;
             width: 100%;
             background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(20px);
             z-index: 1000;
             padding: 1rem 0;
             transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
         }
 
         nav.scrolled {
             background: rgba(255, 255, 255, 0.98);
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--shadow-soft);
         }
 
         .nav-container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
@@ -60,106 +103,254 @@
         }
 
         .logo {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: #8d6e63;
+            font-size: 2rem;
+            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .nav-links {
             display: flex;
             list-style: none;
-            gap: 2rem;
+            gap: 2.5rem;
         }
 
         .nav-links a {
             text-decoration: none;
-            color: #333;
+            color: var(--text-dark);
             font-weight: 500;
+            font-size: 0.95rem;
             transition: all 0.3s ease;
             position: relative;
+            padding: 0.5rem 0;
         }
 
         .nav-links a::after {
             content: '';
             position: absolute;
-            bottom: -5px;
-            left: 0;
+            bottom: 0;
+            left: 50%;
             width: 0;
             height: 2px;
-            background: #c4a574;
-            transition: width 0.3s ease;
+            background: var(--primary-color);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
         }
 
         .nav-links a:hover::after {
             width: 100%;
         }
 
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+        }
+
+        .mobile-menu span {
+            width: 25px;
+            height: 3px;
+            background: var(--text-dark);
+            transition: all 0.3s ease;
+        }
+
         /* Hero Section */
         .hero {
             height: 100vh;
-            background: linear-gradient(135deg, #8d6e63 0%, #a1887f 100%);
+            background: var(--gradient-dark);
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
             color: white;
             position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(245, 230, 211, 0.1) 0%, transparent 50%);
+        }
+
+        .hero-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background: var(--primary-color);
+            border-radius: 50%;
+            opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
         }
 
         .hero-content {
             z-index: 2;
             position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
         }
 
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
+        .hero-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 50px;
+            color: var(--primary-color);
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 2rem;
             opacity: 0;
             animation: fadeInUp 1s ease 0.5s forwards;
         }
 
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 5rem);
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.8s forwards;
+            line-height: 1.1;
+        }
+
+        .hero h1 .highlight {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
         .typing-container {
-            height: 60px;
+            height: 80px;
             margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .typing-text {
             font-size: 1.5rem;
-            color: #f5f5dc;
-            border-right: 2px solid #f5f5dc;
+            color: var(--accent-color);
+            border-right: 2px solid var(--primary-color);
             padding-right: 5px;
             animation: blink 1s infinite;
+            font-weight: 300;
+            opacity: 0;
+            animation: fadeInUp 1s ease 1.1s forwards, blink 1s infinite 2s;
         }
 
         @keyframes blink {
-            0%, 50% { border-color: #f5f5dc; }
+            0%, 50% { border-color: var(--primary-color); }
             51%, 100% { border-color: transparent; }
         }
 
         .hero p {
             font-size: 1.2rem;
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+            font-weight: 300;
+            line-height: 1.7;
             opacity: 0;
-            animation: fadeInUp 1s ease 1s forwards;
+            animation: fadeInUp 1s ease 1.4s forwards;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            opacity: 0;
+            animation: fadeInUp 1s ease 1.7s forwards;
         }
 
         .cta-button {
-            display: inline-block;
-            padding: 12px 30px;
-            background: #c4a574;
-            color: white;
+            padding: 1rem 2.5rem;
+            background: var(--primary-color);
+            color: var(--background-dark);
             text-decoration: none;
-            border-radius: 30px;
-            font-weight: bold;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
             transition: all 0.3s ease;
-            opacity: 0;
-            animation: fadeInUp 1s ease 1.5s forwards;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
         }
 
         .cta-button:hover {
-            transform: translateY(-2px);
-            background: #b8956a;
-            box-shadow: 0 8px 25px rgba(196, 165, 116, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+        }
+
+        .cta-secondary {
+            padding: 1rem 2.5rem;
+            background: transparent;
+            color: white;
+            text-decoration: none;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .cta-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.7);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
         }
 
         @keyframes fadeInUp {
@@ -175,388 +366,793 @@
 
         /* Section Styles */
         .section {
-            padding: 100px 0;
-            max-width: 1200px;
+            padding: 120px 0;
+            max-width: 1400px;
             margin: 0 auto;
             padding-left: 2rem;
             padding-right: 2rem;
         }
 
-        .section h2 {
+        .section-header {
             text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            color: #8d6e63;
+            margin-bottom: 5rem;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
         }
 
-        /* Carousel Styles */
-        .carousel-container {
-            position: relative;
-            max-width: 100%;
-            margin: 0 auto;
-            overflow: hidden;
-            border-radius: 15px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        .section-header.animate {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        .carousel {
-            display: flex;
-            transition: transform 0.5s ease;
-        }
-
-        .carousel-item {
-            min-width: 100%;
-            background: #f5f5f5;
-            padding: 3rem;
-            text-align: center;
-            color: #333;
-            position: relative;
-        }
-
-        .carousel-item:nth-child(1) {
-            background: linear-gradient(135deg, #8d6e63 0%, #a1887f 100%);
-            color: white;
-        }
-
-        .carousel-item:nth-child(2) {
-            background: linear-gradient(135deg, #6d4c41 0%, #8d6e63 100%);
-            color: white;
-        }
-
-        .carousel-item:nth-child(3) {
-            background: linear-gradient(135deg, #a1887f 0%, #bcaaa4 100%);
-            color: white;
-        }
-
-        .carousel-item h3 {
-            font-size: 2rem;
+        .section-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 50px;
+            color: var(--primary-color);
+            font-size: 0.9rem;
+            font-weight: 500;
             margin-bottom: 1rem;
         }
 
-        .carousel-item p {
-            font-size: 1.1rem;
+        .section h2 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
             margin-bottom: 1.5rem;
-            opacity: 0.9;
+            color: var(--text-dark);
         }
 
-        .project-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            text-align: left;
-        }
-
-        .project-item {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 1rem;
-            border-radius: 10px;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-        }
-
-        .project-item:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-3px);
-        }
-
-        .carousel-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.9);
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            cursor: pointer;
+        .section-subtitle {
             font-size: 1.2rem;
-            color: #8d6e63;
-            transition: all 0.3s ease;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.7;
         }
 
-        .carousel-nav:hover {
-            background: white;
-            transform: translateY(-50%) scale(1.1);
+        /* Enhanced Portfolio Section */
+        .portfolio {
+            background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%);
+            position: relative;
         }
 
-        .carousel-prev {
-            left: 20px;
+        .portfolio::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(212, 175, 55, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 90% 80%, rgba(245, 230, 211, 0.05) 0%, transparent 50%);
         }
 
-        .carousel-next {
-            right: 20px;
-        }
-
-        .carousel-indicators {
+        .portfolio-tabs {
             display: flex;
             justify-content: center;
-            gap: 10px;
-            margin-top: 2rem;
+            gap: 1rem;
+            margin-bottom: 4rem;
+            flex-wrap: wrap;
         }
 
-        .indicator {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: rgba(141, 110, 99, 0.3);
+        .tab-button {
+            padding: 1rem 2rem;
+            background: white;
+            border: 2px solid rgba(212, 175, 55, 0.2);
+            border-radius: 50px;
+            color: var(--text-dark);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tab-button.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .tab-button:hover:not(.active) {
+            background: rgba(212, 175, 55, 0.1);
+            border-color: var(--primary-color);
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .portfolio-item {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-soft);
+            transition: all 0.4s ease;
+            opacity: 0;
+            transform: translateY(30px);
+            position: relative;
+            group: true;
+        }
+
+        .portfolio-item.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-strong);
+        }
+
+        .portfolio-image {
+            height: 250px;
+            background: var(--gradient-primary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .portfolio-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .portfolio-item:hover .portfolio-image::before {
+            opacity: 1;
+        }
+
+        .portfolio-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .portfolio-item:hover .portfolio-overlay {
+            opacity: 1;
+        }
+
+        .portfolio-content {
+            padding: 2rem;
+        }
+
+        .portfolio-category {
+            color: var(--primary-color);
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .portfolio-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .portfolio-description {
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .portfolio-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            padding: 0.3rem 0.8rem;
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--primary-color);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        /* Enhanced Gallery */
+        .gallery {
+            background: var(--background-light);
+        }
+
+        .gallery-filter {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-button {
+            padding: 0.8rem 1.5rem;
+            background: transparent;
+            border: 2px solid rgba(212, 175, 55, 0.2);
+            border-radius: 50px;
+            color: var(--text-dark);
+            font-weight: 500;
             cursor: pointer;
             transition: all 0.3s ease;
         }
 
-        .indicator.active {
-            background: #8d6e63;
-            transform: scale(1.2);
-        }
-
-        /* Gallery Section */
-        .gallery {
-            background: #fafafa;
+        .filter-button.active,
+        .filter-button:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
         }
 
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
-            margin-top: 2rem;
+            position: relative;
         }
 
         .gallery-item {
             background: white;
-            border-radius: 10px;
+            border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .gallery-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-        }
-
-        .gallery-image {
-            height: 250px;
-            background: #e0e0e0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #999;
-            font-size: 1rem;
+            box-shadow: var(--shadow-soft);
+            transition: all 0.4s ease;
+            opacity: 0;
+            transform: scale(0.9);
             position: relative;
         }
 
-        .gallery-image::before {
-            content: '📷';
+        .gallery-item.animate {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.02);
+            box-shadow: var(--shadow-strong);
+        }
+
+        .gallery-image {
+            height: 280px;
+            background: var(--gradient-primary);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .gallery-image::after {
+            content: '🔍';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             font-size: 2rem;
-            opacity: 0.5;
+            color: white;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            background: rgba(0, 0, 0, 0.7);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gallery-item:hover .gallery-image::after {
+            opacity: 1;
         }
 
         .gallery-content {
             padding: 1.5rem;
         }
 
-        .gallery-content h4 {
+        .gallery-title {
             font-size: 1.2rem;
+            font-weight: 600;
             margin-bottom: 0.5rem;
-            color: #8d6e63;
+            color: var(--text-dark);
         }
 
-        .gallery-content p {
-            color: #666;
+        .gallery-description {
+            color: var(--text-light);
             font-size: 0.9rem;
+            line-height: 1.6;
         }
 
-        /* About Section */
+        /* Enhanced About Section */
         .about {
-            background: linear-gradient(135deg, #8d6e63 0%, #a1887f 100%);
+            background: var(--gradient-dark);
             color: white;
+            position: relative;
+        }
+
+        .about::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(245, 230, 211, 0.1) 0%, transparent 50%);
         }
 
         .about-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 3rem;
+            gap: 4rem;
             align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .about-text {
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: all 0.8s ease;
+        }
+
+        .about-text.animate {
+            opacity: 1;
+            transform: translateX(0);
         }
 
         .about-text h3 {
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-            color: #f5f5dc;
+            font-size: 2rem;
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
         }
 
         .about-text p {
             font-size: 1.1rem;
-            margin-bottom: 1.5rem;
-            line-height: 1.7;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.9);
         }
 
-        .stats {
+        .stats-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 2rem;
-            margin-top: 2rem;
+            margin-top: 3rem;
+            opacity: 0;
+            transform: translateX(30px);
+            transition: all 0.8s ease 0.3s;
+        }
+
+        .stats-grid.animate {
+            opacity: 1;
+            transform: translateX(0);
         }
 
         .stat-item {
             text-align: center;
-            padding: 1.5rem;
+            padding: 2rem;
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
+            border-radius: 15px;
             backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
         }
 
         .stat-number {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #f5f5dc;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 500;
         }
 
         .about-location {
             background: rgba(255, 255, 255, 0.1);
-            padding: 2rem;
-            border-radius: 10px;
+            padding: 2.5rem;
+            border-radius: 20px;
             backdrop-filter: blur(10px);
             text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease 0.6s;
         }
 
-        /* Contact Section */
+        .about-location.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .about-location h4 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Enhanced Contact Section */
         .contact {
-            background: #f8f8f8;
+            background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%);
+            position: relative;
+        }
+
+        .contact::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(212, 175, 55, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 90% 80%, rgba(245, 230, 211, 0.05) 0%, transparent 50%);
         }
 
         .contact-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 3rem;
+            gap: 4rem;
             align-items: start;
+            position: relative;
+            z-index: 2;
+        }
+
+        .contact-info {
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: all 0.8s ease;
+        }
+
+        .contact-info.animate {
+            opacity: 1;
+            transform: translateX(0);
         }
 
         .contact-info h3 {
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-            color: #8d6e63;
+            font-size: 2rem;
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 2rem;
+            color: var(--text-dark);
         }
 
         .contact-item {
             display: flex;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            font-size: 1.1rem;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--shadow-soft);
+            transition: all 0.3s ease;
         }
 
-        .contact-item i {
-            width: 50px;
-            height: 50px;
-            background: #c4a574;
-            border-radius: 50%;
+        .contact-item:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-strong);
+        }
+
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-primary);
+            border-radius: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            margin-right: 1rem;
-            font-size: 1.2rem;
+            margin-right: 1.5rem;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .contact-details strong {
+            color: var(--text-dark);
+            font-weight: 600;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-details {
+            color: var(--text-light);
+            line-height: 1.6;
         }
 
         .contact-form {
             background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow-strong);
+            opacity: 0;
+            transform: translateX(30px);
+            transition: all 0.8s ease 0.3s;
+        }
+
+        .contact-form.animate {
+            opacity: 1;
+            transform: translateX(0);
         }
 
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 0.5rem;
-            font-weight: bold;
-            color: #333;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+            color: var(--text-dark);
         }
 
         .form-group input,
         .form-group textarea {
             width: 100%;
-            padding: 12px;
-            border: 2px solid #e9ecef;
-            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            border: 2px solid rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
             font-size: 1rem;
             transition: all 0.3s ease;
+            font-family: inherit;
         }
 
         .form-group input:focus,
         .form-group textarea:focus {
             outline: none;
-            border-color: #c4a574;
-            box-shadow: 0 0 0 3px rgba(196, 165, 116, 0.1);
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
         }
 
         .submit-btn {
             width: 100%;
-            padding: 15px;
-            background: #c4a574;
+            padding: 1.2rem 2rem;
+            background: var(--gradient-primary);
             color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             font-size: 1.1rem;
-            font-weight: bold;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .submit-btn:hover::before {
+            left: 100%;
         }
 
         .submit-btn:hover {
-            background: #b8956a;
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(196, 165, 116, 0.3);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
         }
 
         /* Footer */
         footer {
-            background: #333;
+            background: var(--background-dark);
             color: white;
             text-align: center;
-            padding: 2rem 0;
+            padding: 3rem 0;
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--gradient-primary);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .footer-text {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 1rem;
+        }
+
+        .footer-signature {
+            color: var(--primary-color);
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            font-weight: 500;
         }
 
         /* Responsive Design */
+        @media (max-width: 1024px) {
+            .about-content,
+            .contact-content {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
             }
 
+            .mobile-menu {
+                display: flex;
+            }
+
             .hero h1 {
-                font-size: 2.5rem;
+                font-size: 3rem;
             }
 
             .typing-text {
                 font-size: 1.2rem;
             }
 
-            .about-content,
-            .contact-content {
-                grid-template-columns: 1fr;
+            .hero-buttons {
+                flex-direction: column;
+                gap: 1rem;
             }
 
-            .stats {
-                grid-template-columns: 1fr;
-            }
-
-            .carousel-nav {
-                display: none;
-            }
-
-            .section {
-                padding: 60px 1rem;
-            }
-
+            .portfolio-grid,
             .gallery-grid {
                 grid-template-columns: 1fr;
             }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section {
+                padding: 80px 1rem;
+            }
+
+            .portfolio-tabs,
+            .gallery-filter {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .about-text,
+            .contact-info,
+            .contact-form,
+            .stats-grid,
+            .about-location {
+                transform: none;
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: 0 1rem;
+            }
+
+            .hero-badge,
+            .section-badge {
+                font-size: 0.8rem;
+                padding: 0.4rem 1rem;
+            }
+
+            .cta-button,
+            .cta-secondary {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.9rem;
+            }
+
+            .contact-form {
+                padding: 2rem;
+            }
+
+            .contact-item {
+                padding: 1rem;
+            }
+
+            .contact-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+                margin-right: 1rem;
+            }
+        }
+
+        /* Animation utilities */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .fade-in.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.8s ease;
+        }
+
+        .slide-in-left.animate {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.8s ease;
+        }
+
+        .slide-in-right.animate {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .scale-in {
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.8s ease;
+        }
+
+        .scale-in.animate {
+            opacity: 1;
+            transform: scale(1);
         }
     </style>
 </head>
 <body>
+    <!-- Loading Screen -->
+    <div class="loader" id="loader">
+        <div class="loader-text">G. Uhanowita</div>
+    </div>
+
     <!-- Navigation -->
     <nav id="navbar">
         <div class="nav-container">
@@ -568,146 +1164,247 @@
                 <li><a href="#gallery">Gallery</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
+            <div class="mobile-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
     <section id="home" class="hero">
+        <div class="hero-particles" id="particles"></div>
         <div class="hero-content">
-            <h1>G. Uhanowita</h1>
+            <div class="hero-badge">✨ Professional Makeup Artist</div>
+            <h1>G. <span class="highlight">Uhanowita</span></h1>
             <div class="typing-container">
                 <span id="typed-text" class="typing-text"></span>
             </div>
-            <p>Creating stunning transformations for TV, Film & Media</p>
-            <a href="#portfolio" class="cta-button">View My Work</a>
+            <p>Creating stunning visual transformations for television, film, and media productions across Sri Lanka</p>
+            <div class="hero-buttons">
+                <a href="#portfolio" class="cta-button">Explore My Work</a>
+                <a href="#contact" class="cta-secondary">Let's Collaborate</a>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div style="font-size: 1.5rem;">↓</div>
+            <div style="font-size: 0.8rem; margin-top: 0.5rem;">Scroll Down</div>
         </div>
     </section>
 
     <!-- About Section -->
     <section id="about" class="about">
         <div class="section">
-            <h2>About Me</h2>
+            <div class="section-header">
+                <div class="section-badge">About Me</div>
+                <h2>Crafting Beauty Through Art</h2>
+                <p class="section-subtitle">With over 7 years of professional experience in the beauty and entertainment industry</p>
+            </div>
             <div class="about-content">
                 <div class="about-text">
-                    <h3>Professional Makeup Artist</h3>
-                    <p>With extensive experience in television, film, and media productions, I bring creativity and technical expertise to every project. Based in Sri Lanka, I've had the privilege of working on numerous high-profile TV commercials, teledramas, and film productions.</p>
-                    <p>My passion lies in enhancing natural beauty and creating character transformations that bring stories to life on screen.</p>
-                    <div class="stats">
+                    <h3>Professional Excellence</h3>
+                    <p>As a dedicated makeup artist specializing in television, film, and media productions, I bring both creativity and technical precision to every project. My work spans across Sri Lanka's most prominent TV commercials, teledramas, and film productions.</p>
+                    <p>I believe in enhancing natural beauty while creating authentic character transformations that serve the story. Every face tells a unique story, and my role is to help bring that narrative to life on screen.</p>
+                    <div class="stats-grid">
                         <div class="stat-item">
                             <div class="stat-number">50+</div>
-                            <div>Projects Completed</div>
+                            <div class="stat-label">Projects Completed</div>
                         </div>
                         <div class="stat-item">
                             <div class="stat-number">7+</div>
-                            <div>Years Experience</div>
+                            <div class="stat-label">Years Experience</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">100+</div>
+                            <div class="stat-label">Happy Clients</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">25+</div>
+                            <div class="stat-label">TV Productions</div>
                         </div>
                     </div>
                 </div>
                 <div class="about-location">
-                    <h3 style="margin-bottom: 1rem; color: #f5f5dc;">Location</h3>
-                    <p style="font-size: 1.1rem;">182/62, Mavilhena<br>Kindelpitiya, Bandaragama<br>Sri Lanka</p>
+                    <h4>📍 Based in Sri Lanka</h4>
+                    <p style="font-size: 1.1rem; line-height: 1.6;">182/62, Mavilhena<br>Kindelpitiya, Bandaragama<br>Sri Lanka</p>
+                    <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.2);">
+                        <h4 style="margin-bottom: 1rem;">Specializations</h4>
+                        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center;">
+                            <span class="tag" style="background: rgba(255,255,255,0.2); color: white;">TV Commercials</span>
+                            <span class="tag" style="background: rgba(255,255,255,0.2); color: white;">Film Production</span>
+                            <span class="tag" style="background: rgba(255,255,255,0.2); color: white;">Teledramas</span>
+                            <span class="tag" style="background: rgba(255,255,255,0.2); color: white;">Character Design</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Portfolio Section -->
-    <section id="portfolio" class="section">
-        <h2>My Portfolio</h2>
-        <div class="carousel-container">
-            <div class="carousel" id="carousel">
-                <!-- TV Commercials Slide -->
-                <div class="carousel-item">
-                    <h3>TV Commercials</h3>
-                    <p>Professional makeup artistry for leading brand campaigns</p>
-                    <div class="project-list">
-                        <div class="project-item">
-                            <h4>Lipton Ceylon Tea</h4>
-                            <p>Brand commercial makeup</p>
-                        </div>
-                        <div class="project-item">
-                            <h4>Dadayam Batta</h4>
-                            <p>Soya meat commercial</p>
-                        </div>
-                        <div class="project-item">
-                            <h4>Coca Cola</h4>
-                            <p>International brand campaign</p>
-                        </div>
-                        <div class="project-item">
-                            <h4>Keells Super</h4>
-                            <p>Retail chain commercial</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Films Slide -->
-                <div class="carousel-item">
-                    <h3>Films & Productions</h3>
-                    <p>Character makeup and styling for cinema and media</p>
-                    <div class="project-list">
-                        <div class="project-item">
-                            <h4>Adaraneeya Wassanaya</h4>
-                            <p>Manjari Films production</p>
-                        </div>
-                        <div class="project-item">
-                            <h4>Heart FM</h4>
-                            <p>Radio station production</p>
-                        </div>
-                        <div class="project-item">
-                            <h4>Spandana</h4>
-                            <p>Drama production</p>
-                        </div>
-                        <div class="project-item">
-                            <h4>Thattu Deke Iskole</h4>
-                            <p>Educational program</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Teledramas Slide -->
-                <div class="carousel-item">
-                    <h3>Teledramas</h3>
-                    <p>Daily makeup artistry for popular television series</p>
-                    <div class="project-list">
-                        <div class="project-item">
-                            <h4>Itin Ita Passe</h4>
-                            <p>Popular teledrama series</p>
-                        </div>
-                        <div class="project-item">
-                            <h4>Bonda Meedum</h4>
-                            <p>Family drama series</p>
-                        </div>
-                        <div class="project-item">
-                            <h4>Uthum Pathum</h4>
-                            <p>Evening teledrama</p>
-                        </div>
-                        <div class="project-item">
-                            <h4>Pahasara</h4>
-                            <p>Period drama makeup</p>
-                        </div>
-                        <div class="project-item">
-                            <h4>Neela Pabalu</h4>
-                            <p>Contemporary series</p>
-                        </div>
-                        <div class="project-item">
-                            <h4>Thodu</h4>
-                            <p>Drama series</p>
-                        </div>
-                        <div class="project-item">
-                            <h4>Girikula</h4>
-                            <p>Adventure series</p>
-                        </div>
-                    </div>
-                </div>
+    <section id="portfolio" class="portfolio">
+        <div class="section">
+            <div class="section-header">
+                <div class="section-badge">My Work</div>
+                <h2>Featured Portfolio</h2>
+                <p class="section-subtitle">A showcase of my most memorable and impactful projects across various media</p>
+            </div>
+            
+            <div class="portfolio-tabs">
+                <button class="tab-button active" data-category="all">All Projects</button>
+                <button class="tab-button" data-category="commercials">TV Commercials</button>
+                <button class="tab-button" data-category="films">Films</button>
+                <button class="tab-button" data-category="teledramas">Teledramas</button>
             </div>
 
-            <button class="carousel-nav carousel-prev" onclick="prevSlide()">‹</button>
-            <button class="carousel-nav carousel-next" onclick="nextSlide()">›</button>
+            <div class="portfolio-grid" id="portfolioGrid">
+                <!-- TV Commercials -->
+                <div class="portfolio-item" data-category="commercials">
+                    <div class="portfolio-image">
+                        <div class="portfolio-overlay">
+                            <h4>View Project</h4>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <div class="portfolio-category">TV Commercial</div>
+                        <h3 class="portfolio-title">Lipton Ceylon Tea</h3>
+                        <p class="portfolio-description">Brand commercial makeup focusing on natural beauty enhancement and authentic Sri Lankan elegance.</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Natural Beauty</span>
+                            <span class="tag">Brand Campaign</span>
+                            <span class="tag">Commercial</span>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="carousel-indicators">
-                <span class="indicator active" onclick="currentSlide(1)"></span>
-                <span class="indicator" onclick="currentSlide(2)"></span>
-                <span class="indicator" onclick="currentSlide(3)"></span>
+                <div class="portfolio-item" data-category="commercials">
+                    <div class="portfolio-image">
+                        <div class="portfolio-overlay">
+                            <h4>View Project</h4>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <div class="portfolio-category">TV Commercial</div>
+                        <h3 class="portfolio-title">Coca Cola Campaign</h3>
+                        <p class="portfolio-description">International brand campaign featuring youthful and vibrant makeup looks for diverse cast members.</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Youth Marketing</span>
+                            <span class="tag">International Brand</span>
+                            <span class="tag">Vibrant Looks</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-item" data-category="commercials">
+                    <div class="portfolio-image">
+                        <div class="portfolio-overlay">
+                            <h4>View Project</h4>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <div class="portfolio-category">TV Commercial</div>
+                        <h3 class="portfolio-title">Keells Super</h3>
+                        <p class="portfolio-description">Family-oriented retail campaign with emphasis on approachable and warm makeup styling.</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Family Campaign</span>
+                            <span class="tag">Retail</span>
+                            <span class="tag">Warm Styling</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Films -->
+                <div class="portfolio-item" data-category="films">
+                    <div class="portfolio-image">
+                        <div class="portfolio-overlay">
+                            <h4>View Project</h4>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <div class="portfolio-category">Film Production</div>
+                        <h3 class="portfolio-title">Adaraneeya Wassanaya</h3>
+                        <p class="portfolio-description">Manjari Films production featuring complex character development and emotional storytelling through makeup.</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Character Development</span>
+                            <span class="tag">Cinema</span>
+                            <span class="tag">Emotional Depth</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-item" data-category="films">
+                    <div class="portfolio-image">
+                        <div class="portfolio-overlay">
+                            <h4>View Project</h4>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <div class="portfolio-category">Media Production</div>
+                        <h3 class="portfolio-title">Heart FM</h3>
+                        <p class="portfolio-description">Radio station visual production with professional styling for media personalities and promotional content.</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Media Styling</span>
+                            <span class="tag">Professional</span>
+                            <span class="tag">Promotional</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Teledramas -->
+                <div class="portfolio-item" data-category="teledramas">
+                    <div class="portfolio-image">
+                        <div class="portfolio-overlay">
+                            <h4>View Project</h4>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <div class="portfolio-category">Teledrama</div>
+                        <h3 class="portfolio-title">Itin Ita Passe</h3>
+                        <p class="portfolio-description">Popular daily teledrama series requiring consistent character makeup and style continuity.</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Daily Series</span>
+                            <span class="tag">Character Consistency</span>
+                            <span class="tag">Popular Drama</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-item" data-category="teledramas">
+                    <div class="portfolio-image">
+                        <div class="portfolio-overlay">
+                            <h4>View Project</h4>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <div class="portfolio-category">Teledrama</div>
+                        <h3 class="portfolio-title">Pahasara</h3>
+                        <p class="portfolio-description">Period drama requiring historical accuracy in makeup design and authentic character portrayal.</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Period Drama</span>
+                            <span class="tag">Historical Accuracy</span>
+                            <span class="tag">Authentic Design</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-item" data-category="teledramas">
+                    <div class="portfolio-image">
+                        <div class="portfolio-overlay">
+                            <h4>View Project</h4>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <div class="portfolio-category">Teledrama</div>
+                        <h3 class="portfolio-title">Bonda Meedum</h3>
+                        <p class="portfolio-description">Family drama series focusing on multi-generational character development and evolving relationships.</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Family Drama</span>
+                            <span class="tag">Multi-Generational</span>
+                            <span class="tag">Character Evolution</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -715,210 +1412,83 @@
     <!-- Gallery Section -->
     <section id="gallery" class="gallery">
         <div class="section">
-            <h2>Project Gallery</h2>
-            <div class="gallery-grid">
-                <!-- Row 1 -->
-                <div class="gallery-item">
-                    <div class="gallery-image" style="background-image: url('./assets/img1.jpg'); background-size: cover; background-position: center;">
-                        <span style="background: rgba(0,0,0,0.7); color: white; padding: 5px 10px; border-radius: 5px;">Photo 1</span>
-                    </div>
+            <div class="section-header">
+                <div class="section-badge">Gallery</div>
+                <h2>Behind the Scenes</h2>
+                <p class="section-subtitle">A visual journey through my work process and project highlights</p>
+            </div>
+
+            <div class="gallery-filter">
+                <button class="filter-button active" data-filter="all">All</button>
+                <button class="filter-button" data-filter="commercial">Commercial</button>
+                <button class="filter-button" data-filter="film">Film</button>
+                <button class="filter-button" data-filter="teledrama">Teledrama</button>
+                <button class="filter-button" data-filter="bts">Behind the Scenes</button>
+            </div>
+
+            <div class="gallery-grid" id="galleryGrid">
+                <!-- Gallery items will be populated by JavaScript -->
+                <div class="gallery-item" data-category="commercial">
+                    <div class="gallery-image"></div>
                     <div class="gallery-content">
-                        <h4>Lipton Ceylon Tea</h4>
-                        <p>Commercial makeup - Natural beauty enhancement</p>
+                        <h4 class="gallery-title">Lipton Ceylon Tea</h4>
+                        <p class="gallery-description">Natural beauty enhancement for brand campaign</p>
                     </div>
                 </div>
 
-                <div class="gallery-item">
-                    <div class="gallery-image" style="background-image: url('./assets/photo2.jpg'); background-size: cover; background-position: center;">
-                        <span style="background: rgba(0,0,0,0.7); color: white; padding: 5px 10px; border-radius: 5px;">Photo 2</span>
-                    </div>
+                <div class="gallery-item" data-category="film">
+                    <div class="gallery-image"></div>
                     <div class="gallery-content">
-                        <h4>Coca Cola Campaign</h4>
-                        <p>Brand commercial - Youthful and vibrant looks</p>
+                        <h4 class="gallery-title">Adaraneeya Wassanaya</h4>
+                        <p class="gallery-description">Character development for film production</p>
                     </div>
                 </div>
 
-                <div class="gallery-item">
-                    <div class="gallery-image" style="background-image: url('./assets/photo3.jpg'); background-size: cover; background-position: center;">
-                        <span style="background: rgba(0,0,0,0.7); color: white; padding: 5px 10px; border-radius: 5px;">Photo 3</span>
-                    </div>
+                <div class="gallery-item" data-category="teledrama">
+                    <div class="gallery-image"></div>
                     <div class="gallery-content">
-                        <h4>Adaraneeya Wassanaya</h4>
-                        <p>Film production - Character development</p>
+                        <h4 class="gallery-title">Pahasara</h4>
+                        <p class="gallery-description">Period drama historical accuracy</p>
                     </div>
                 </div>
 
-                <div class="gallery-item">
-                    <div class="gallery-image" style="background-image: url('./assets/photo4.jpg'); background-size: cover; background-position: center;">
-                        <span style="background: rgba(0,0,0,0.7); color: white; padding: 5px 10px; border-radius: 5px;">Photo 4</span>
-                    </div>
+                <div class="gallery-item" data-category="commercial">
+                    <div class="gallery-image"></div>
                     <div class="gallery-content">
-                        <h4>Keells Super</h4>
-                        <p>Commercial - Family-friendly styling</p>
+                        <h4 class="gallery-title">Coca Cola Campaign</h4>
+                        <p class="gallery-description">Youthful and vibrant makeup looks</p>
                     </div>
                 </div>
 
-                <!-- Row 2 -->
-                <div class="gallery-item">
-                    <div class="gallery-image" style="background-image: url('./assets/photo5.jpg'); background-size: cover; background-position: center;">
-                        <span style="background: rgba(0,0,0,0.7); color: white; padding: 5px 10px; border-radius: 5px;">Photo 5</span>
-                    </div>
+                <div class="gallery-item" data-category="bts">
+                    <div class="gallery-image"></div>
                     <div class="gallery-content">
-                        <h4>Itin Ita Passe</h4>
-                        <p>Teledrama - Daily series makeup</p>
+                        <h4 class="gallery-title">Behind the Scenes</h4>
+                        <p class="gallery-description">Makeup application process</p>
                     </div>
                 </div>
 
-                <div class="gallery-item">
-                    <div class="gallery-image" style="background-image: url('./assets/photo6.jpg'); background-size: cover; background-position: center;">
-                        <span style="background: rgba(0,0,0,0.7); color: white; padding: 5px 10px; border-radius: 5px;">Photo 6</span>
-                    </div>
+                <div class="gallery-item" data-category="teledrama">
+                    <div class="gallery-image"></div>
                     <div class="gallery-content">
-                        <h4>Pahasara</h4>
-                        <p>Period drama - Historical accuracy</p>
+                        <h4 class="gallery-title">Itin Ita Passe</h4>
+                        <p class="gallery-description">Daily series makeup consistency</p>
                     </div>
                 </div>
 
-                <div class="gallery-item">
-                    <div class="gallery-image" style="background-image: url('./assets/photo7.jpg'); background-size: cover; background-position: center;">
-                        <span style="background: rgba(0,0,0,0.7); color: white; padding: 5px 10px; border-radius: 5px;">Photo 7</span>
-                    </div>
+                <div class="gallery-item" data-category="film">
+                    <div class="gallery-image"></div>
                     <div class="gallery-content">
-                        <h4>Heart FM</h4>
-                        <p>Media production - Professional styling</p>
+                        <h4 class="gallery-title">Heart FM Production</h4>
+                        <p class="gallery-description">Professional media styling</p>
                     </div>
                 </div>
 
-                <div class="gallery-item">
-                    <div class="gallery-image" style="background-image: url('./assets/photo8.jpg'); background-size: cover; background-position: center;">
-                        <span style="background: rgba(0,0,0,0.7); color: white; padding: 5px 10px; border-radius: 5px;">Photo 8</span>
-                    </div>
+                <div class="gallery-item" data-category="commercial">
+                    <div class="gallery-image"></div>
                     <div class="gallery-content">
-                        <h4>Bonda Meedum</h4>
-                        <p>Family drama - Character consistency</p>
-                    </div>
-                </div>
-
-                <!-- Row 3 -->
-                <div class="gallery-item">
-                    <div class="gallery-image" style="background-image: url('./assets/photo9.jpg'); background-size: cover; background-position: center;">
-                        <span style="background: rgba(0,0,0,0.7); color: white; padding: 5px 10px; border-radius: 5px;">Photo 9</span>
-                    </div>
-                    <div class="gallery-content">
-                        <h4>Dadayam Batta</h4>
-                        <p>Commercial - Authentic family looks</p>
-                    </div>
-                </div>
-
-                <div class="gallery-item">
-                    <div class="gallery-image" style="background-image: url('./assets/photo10.jpg'); background-size: cover; background-position: center;">
-                        <span style="background: rgba(0,0,0,0.7); color: white; padding: 5px 10px; border-radius: 5px;">Photo 10</span>
-                    </div>
-                    <div class="gallery-content">
-                        <h4>Uthum Pathum</h4>
-                        <p>Evening drama - Sophisticated styling</p>
-                    </div>
-                </div>
-
-                <div class="gallery-item">
-                    <div class="gallery-image" style="background-image: url('./assets/photo11.jpg'); background-size: cover; background-position: center;">
-                        <span style="background: rgba(0,0,0,0.7); color: white; padding: 5px 10px; border-radius: 5px;">Photo 11</span>
-                    </div>
-                    <div class="gallery-content">
-                        <h4>Spandana</h4>
-                        <p>Drama production - Emotional storytelling</p>
-                    </div>
-                </div>
-
-                <div class="gallery-item">
-                    <div class="gallery-image" style="background-image: url('./assets/photo12.jpg'); background-size: cover; background-position: center;">
-                        <span style="background: rgba(0,0,0,0.7); color: white; padding: 5px 10px; border-radius: 5px;">Photo 12</span>
-                    </div>
-                    <div class="gallery-content">
-                        <h4>Neela Pabalu</h4>
-                        <p>Contemporary series - Modern looks</p>
-                    </div>
-                </div>
-
-                <!-- Row 4 -->
-                <div class="gallery-item">
-                    <div class="gallery-image" style="background-image: url('./assets/photo13.jpg'); background-size: cover; background-position: center;">
-                        <span style="background: rgba(0,0,0,0.7); color: white; padding: 5px 10px; border-radius: 5px;">Photo 13</span>
-                    </div>
-                    <div class="gallery-content">
-                        <h4>Thodu</h4>
-                        <p>Drama series - Character transformation</p>
-                    </div>
-                </div>
-
-                <div class="gallery-item">
-                    <div class="gallery-image" style="background-image: url('./assets/photo14.jpg'); background-size: cover; background-position: center;">
-                        <span style="background: rgba(0,0,0,0.7); color: white; padding: 5px 10px; border-radius: 5px;">Photo 14</span>
-                    </div>
-                    <div class="gallery-content">
-                        <h4>Girikula</h4>
-                        <p>Adventure series - Action-ready makeup</p>
-                    </div>
-                </div>
-
-                <div class="gallery-item">
-                    <div class="gallery-image" style="background-image: url('./assets/photo15.jpg'); background-size: cover; background-position: center;">
-                        <span style="background: rgba(0,0,0,0.7); color: white; padding: 5px 10px; border-radius: 5px;">Photo 15</span>
-                    </div>
-                    <div class="gallery-content">
-                        <h4>Thattu Deke Iskole</h4>
-                        <p>Educational program - Age-appropriate styling</p>
-                    </div>
-                </div>
-
-                <div class="gallery-item">
-                    <div class="gallery-image" style="background-image: url('./assets/photo16.jpg'); background-size: cover; background-position: center;">
-                        <span style="background: rgba(0,0,0,0.7); color: white; padding: 5px 10px; border-radius: 5px;">Photo 16</span>
-                    </div>
-                    <div class="gallery-content">
-                        <h4>Behind the Scenes</h4>
-                        <p>Production moments - Makeup application process</p>
-                    </div>
-                </div>
-
-                <!-- Row 5 -->
-                <div class="gallery-item">
-                    <div class="gallery-image" style="background-image: url('./assets/photo17.jpg'); background-size: cover; background-position: center;">
-                        <span style="background: rgba(0,0,0,0.7); color: white; padding: 5px 10px; border-radius: 5px;">Photo 17</span>
-                    </div>
-                    <div class="gallery-content">
-                        <h4>Commercial Work</h4>
-                        <p>Brand campaigns - Professional beauty enhancement</p>
-                    </div>
-                </div>
-
-                <div class="gallery-item">
-                    <div class="gallery-image" style="background-image: url('./assets/photo18.jpg'); background-size: cover; background-position: center;">
-                        <span style="background: rgba(0,0,0,0.7); color: white; padding: 5px 10px; border-radius: 5px;">Photo 18</span>
-                    </div>
-                    <div class="gallery-content">
-                        <h4>Film Production</h4>
-                        <p>Cinema makeup - Character depth and authenticity</p>
-                    </div>
-                </div>
-
-                <div class="gallery-item">
-                    <div class="gallery-image" style="background-image: url('./assets/photo19.jpg'); background-size: cover; background-position: center;">
-                        <span style="background: rgba(0,0,0,0.7); color: white; padding: 5px 10px; border-radius: 5px;">Photo 19</span>
-                    </div>
-                    <div class="gallery-content">
-                        <h4>Television Drama</h4>
-                        <p>TV series - Consistent character portrayal</p>
-                    </div>
-                </div>
-
-                <div class="gallery-item">
-                    <div class="gallery-image" style="background-image: url('./assets/photo20.jpg'); background-size: cover; background-position: center;">
-                        <span style="background: rgba(0,0,0,0.7); color: white; padding: 5px 10px; border-radius: 5px;">Photo 20</span>
-                    </div>
-                    <div class="gallery-content">
-                        <h4>Portfolio Highlights</h4>
-                        <p>Best work - Showcase of artistic versatility</p>
+                        <h4 class="gallery-title">Keells Super</h4>
+                        <p class="gallery-description">Family-friendly commercial styling</p>
                     </div>
                 </div>
             </div>
@@ -928,52 +1498,70 @@
     <!-- Contact Section -->
     <section id="contact" class="contact">
         <div class="section">
-            <h2>Get In Touch</h2>
+            <div class="section-header">
+                <div class="section-badge">Contact</div>
+                <h2>Let's Create Together</h2>
+                <p class="section-subtitle">Ready to bring your vision to life? Let's discuss your next project</p>
+            </div>
             <div class="contact-content">
                 <div class="contact-info">
-                    <h3>Let's Work Together</h3>
+                    <h3>Get In Touch</h3>
                     <div class="contact-item">
-                        <i>📱</i>
-                        <div>
-                            <strong>Phone</strong><br>
+                        <div class="contact-icon">📱</div>
+                        <div class="contact-details">
+                            <strong>Phone</strong>
                             077 717 8787
                         </div>
                     </div>
                     <div class="contact-item">
-                        <i>📍</i>
-                        <div>
-                            <strong>Address</strong><br>
+                        <div class="contact-icon">📍</div>
+                        <div class="contact-details">
+                            <strong>Location</strong>
                             182/62, Mavilhena<br>
                             Kindelpitiya, Bandaragama<br>
                             Sri Lanka
                         </div>
                     </div>
                     <div class="contact-item">
-                        <i>💄</i>
-                        <div>
-                            <strong>Services</strong><br>
-                            TV Commercials, Films<br>
-                            Teledramas, Special Events
+                        <div class="contact-icon">💄</div>
+                        <div class="contact-details">
+                            <strong>Services</strong>
+                            TV Commercials • Films<br>
+                            Teledramas • Special Events<br>
+                            Character Design • Beauty Enhancement
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">⏰</div>
+                        <div class="contact-details">
+                            <strong>Availability</strong>
+                            Available for projects<br>
+                            Professional consultations<br>
+                            On-location services
                         </div>
                     </div>
                 </div>
                 <div class="contact-form">
-                    <form>
+                    <form id="contactForm">
                         <div class="form-group">
-                            <label for="name">Name</label>
+                            <label for="name">Full Name</label>
                             <input type="text" id="name" name="name" required>
                         </div>
                         <div class="form-group">
-                            <label for="email">Email</label>
+                            <label for="email">Email Address</label>
                             <input type="email" id="email" name="email" required>
                         </div>
                         <div class="form-group">
                             <label for="project">Project Type</label>
-                            <input type="text" id="project" name="project" placeholder="TV Commercial, Film, Event, etc.">
+                            <input type="text" id="project" name="project" placeholder="e.g., TV Commercial, Film, Teledrama">
                         </div>
                         <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" name="message" rows="5" required></textarea>
+                            <label for="budget">Budget Range (Optional)</label>
+                            <input type="text" id="budget" name="budget" placeholder="e.g., $1000-$5000">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Project Details</label>
+                            <textarea id="message" name="message" rows="5" placeholder="Tell me about your project, timeline, and vision..." required></textarea>
                         </div>
                         <button type="submit" class="submit-btn">Send Message</button>
                     </form>
@@ -984,18 +1572,44 @@
 
     <!-- Footer -->
     <footer>
-        <div class="section">
-            <p>&copy; 2025 G. Uhanowita - Professional Makeup Artist. All rights reserved.</p>
+        <div class="footer-content">
+            <p class="footer-text">&copy; 2025 G. Uhanowita - Professional Makeup Artist. All rights reserved.</p>
+            <p class="footer-signature">Crafting Beauty • Creating Characters • Bringing Stories to Life</p>
         </div>
     </footer>
 
     <script>
+        // Page Loading
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader');
+            setTimeout(() => {
+                loader.style.opacity = '0';
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                    startAnimations();
+                }, 500);
+            }, 1500);
+        });
+
+        // Start animations after loading
+        function startAnimations() {
+            // Start typing effect
+            setTimeout(typeWriter, 1000);
+            
+            // Create particles
+            createParticles();
+            
+            // Initialize scroll animations
+            initScrollAnimations();
+        }
+
         // Typing effect
         const texts = [
             "Professional Makeup Artist",
             "TV Commercial Specialist", 
             "Film Makeup Expert",
-            "Teledrama Stylist"
+            "Character Design Artist",
+            "Beauty Enhancement Specialist"
         ];
         
         let textIndex = 0;
@@ -1014,7 +1628,7 @@
                 charIndex++;
             }
 
-            let typeSpeed = isDeleting ? 100 : 150;
+            let typeSpeed = isDeleting ? 50 : 100;
 
             if (!isDeleting && charIndex === currentText.length) {
                 typeSpeed = 2000;
@@ -1028,48 +1642,107 @@
             setTimeout(typeWriter, typeSpeed);
         }
 
-        // Start typing effect when page loads
-        window.addEventListener('load', () => {
-            setTimeout(typeWriter, 1000);
-        });
+        // Create floating particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 20;
 
-        // Carousel functionality
-        let currentSlideIndex = 0;
-        const slides = document.querySelectorAll('.carousel-item');
-        const indicators = document.querySelectorAll('.indicator');
-        const totalSlides = slides.length;
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.width = Math.random() * 6 + 2 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = Math.random() * 4 + 4 + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
 
-        function showSlide(index) {
-            const carousel = document.getElementById('carousel');
-            carousel.style.transform = `translateX(-${index * 100}%)`;
-            
-            indicators.forEach((indicator, i) => {
-                indicator.classList.toggle('active', i === index);
+        // Scroll animations
+        function initScrollAnimations() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate');
+                    }
+                });
+            }, observerOptions);
+
+            // Observe elements with animation classes
+            document.querySelectorAll('.section-header, .about-text, .stats-grid, .about-location, .contact-info, .contact-form, .portfolio-item, .gallery-item').forEach(el => {
+                observer.observe(el);
             });
         }
 
-        function nextSlide() {
-            currentSlideIndex = (currentSlideIndex + 1) % totalSlides;
-            showSlide(currentSlideIndex);
-        }
+        // Portfolio filtering
+        const portfolioTabs = document.querySelectorAll('.tab-button');
+        const portfolioItems = document.querySelectorAll('.portfolio-item');
 
-        function prevSlide() {
-            currentSlideIndex = (currentSlideIndex - 1 + totalSlides) % totalSlides;
-            showSlide(currentSlideIndex);
-        }
+        portfolioTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const category = tab.dataset.category;
+                
+                // Update active tab
+                portfolioTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                // Filter items
+                portfolioItems.forEach(item => {
+                    if (category === 'all' || item.dataset.category === category) {
+                        item.style.display = 'block';
+                        setTimeout(() => {
+                            item.classList.add('animate');
+                        }, 100);
+                    } else {
+                        item.classList.remove('animate');
+                        setTimeout(() => {
+                            item.style.display = 'none';
+                        }, 300);
+                    }
+                });
+            });
+        });
 
-        function currentSlide(index) {
-            currentSlideIndex = index - 1;
-            showSlide(currentSlideIndex);
-        }
+        // Gallery filtering
+        const galleryFilters = document.querySelectorAll('.filter-button');
+        const galleryItems = document.querySelectorAll('.gallery-item');
 
-        // Auto-slide carousel
-        setInterval(nextSlide, 5000);
+        galleryFilters.forEach(filter => {
+            filter.addEventListener('click', () => {
+                const category = filter.dataset.filter;
+                
+                // Update active filter
+                galleryFilters.forEach(f => f.classList.remove('active'));
+                filter.classList.add('active');
+                
+                // Filter items
+                galleryItems.forEach(item => {
+                    if (category === 'all' || item.dataset.category === category) {
+                        item.style.display = 'block';
+                        setTimeout(() => {
+                            item.classList.add('animate');
+                        }, 100);
+                    } else {
+                        item.classList.remove('animate');
+                        setTimeout(() => {
+                            item.style.display = 'none';
+                        }, 300);
+                    }
+                });
+            });
+        });
 
         // Navbar scroll effect
         window.addEventListener('scroll', () => {
             const navbar = document.getElementById('navbar');
-            if (window.scrollY > 50) {
+            if (window.scrollY > 100) {
                 navbar.classList.add('scrolled');
             } else {
                 navbar.classList.remove('scrolled');
@@ -1082,44 +1755,376 @@
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
+                    const offsetTop = target.offsetTop - 80;
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
                     });
                 }
             });
         });
 
         // Form submission
-        document.querySelector('form').addEventListener('submit', function(e) {
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            alert('Thank you for your message! I will get back to you soon.');
-            this.reset();
+            
+            // Show success message
+            const submitBtn = this.querySelector('.submit-btn');
+            const originalText = submitBtn.textContent;
+            
+            submitBtn.textContent = 'Sending...';
+            submitBtn.disabled = true;
+            
+            setTimeout(() => {
+                submitBtn.textContent = 'Message Sent! ✓';
+                submitBtn.style.background = '#10b981';
+                
+                setTimeout(() => {
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                    submitBtn.style.background = '';
+                    this.reset();
+                }, 3000);
+            }, 1500);
         });
 
-        // Add scroll animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
+        // Mobile menu toggle (if needed for future enhancement)
+        const mobileMenu = document.querySelector('.mobile-menu');
+        if (mobileMenu) {
+            mobileMenu.addEventListener('click', () => {
+                // Add mobile menu functionality here
+                console.log('Mobile menu clicked');
+            });
+        }
 
-        const observer = new IntersectionObserver((entries) => {
+        // Add some interactive hover effects
+        document.querySelectorAll('.portfolio-item, .gallery-item').forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Add parallax effect to hero section
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallaxElements = document.querySelectorAll('.hero-content');
+            const speed = scrolled * 0.5;
+            
+            parallaxElements.forEach(element => {
+                element.style.transform = `translateY(${speed}px)`;
+            });
+        });
+
+        // Add stagger animation to portfolio items
+        function staggerAnimation(items, delay = 100) {
+            items.forEach((item, index) => {
+                setTimeout(() => {
+                    item.classList.add('animate');
+                }, index * delay);
+            });
+        }
+
+        // Initialize stagger animations when elements come into view
+        const portfolioObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
+                    const items = entry.target.querySelectorAll('.portfolio-item, .gallery-item');
+                    staggerAnimation(items);
+                    portfolioObserver.unobserve(entry.target);
                 }
             });
-        }, observerOptions);
+        }, { threshold: 0.1 });
 
-        // Observe all sections for scroll animations
-        document.querySelectorAll('.section').forEach(section => {
-            section.style.opacity = '0';
-            section.style.transform = 'translateY(30px)';
-            section.style.transition = 'all 0.6s ease';
-            observer.observe(section);
+        document.querySelectorAll('.portfolio-grid, .gallery-grid').forEach(grid => {
+            portfolioObserver.observe(grid);
         });
+
+        // Add number counter animation for stats
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stat-number');
+            
+            counters.forEach(counter => {
+                const target = parseInt(counter.textContent);
+                const duration = 2000;
+                const step = target / (duration / 16);
+                let current = 0;
+                
+                const timer = setInterval(() => {
+                    current += step;
+                    if (current >= target) {
+                        counter.textContent = target + '+';
+                        clearInterval(timer);
+                    } else {
+                        counter.textContent = Math.floor(current) + '+';
+                    }
+                }, 16);
+            });
+        }
+
+        // Trigger counter animation when stats section is visible
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounters();
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        const statsSection = document.querySelector('.stats-grid');
+        if (statsSection) {
+            statsObserver.observe(statsSection);
+        }
+
+        // Add smooth reveal animation for text elements
+        function revealText(element) {
+            const text = element.textContent;
+            element.textContent = '';
+            element.style.opacity = '1';
+            
+            [...text].forEach((char, index) => {
+                setTimeout(() => {
+                    element.textContent += char;
+                }, index * 50);
+            });
+        }
+
+        // Enhanced form validation
+        const form = document.getElementById('contactForm');
+        const inputs = form.querySelectorAll('input, textarea');
+        
+        inputs.forEach(input => {
+            input.addEventListener('blur', validateField);
+            input.addEventListener('input', clearErrors);
+        });
+
+        function validateField(e) {
+            const field = e.target;
+            const value = field.value.trim();
+            
+            // Remove existing error styling
+            field.classList.remove('error');
+            
+            // Validate based on field type
+            if (field.hasAttribute('required') && !value) {
+                showFieldError(field, 'This field is required');
+                return false;
+            }
+            
+            if (field.type === 'email' && value) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(value)) {
+                    showFieldError(field, 'Please enter a valid email address');
+                    return false;
+                }
+            }
+            
+            return true;
+        }
+
+        function showFieldError(field, message) {
+            field.classList.add('error');
+            
+            // Add error styling
+            field.style.borderColor = '#ef4444';
+            field.style.boxShadow = '0 0 0 3px rgba(239, 68, 68, 0.1)';
+            
+            // Show error message
+            let errorDiv = field.parentNode.querySelector('.error-message');
+            if (!errorDiv) {
+                errorDiv = document.createElement('div');
+                errorDiv.className = 'error-message';
+                errorDiv.style.color = '#ef4444';
+                errorDiv.style.fontSize = '0.8rem';
+                errorDiv.style.marginTop = '0.5rem';
+                field.parentNode.appendChild(errorDiv);
+            }
+            errorDiv.textContent = message;
+        }
+
+        function clearErrors(e) {
+            const field = e.target;
+            field.classList.remove('error');
+            field.style.borderColor = '';
+            field.style.boxShadow = '';
+            
+            const errorDiv = field.parentNode.querySelector('.error-message');
+            if (errorDiv) {
+                errorDiv.remove();
+            }
+        }
+
+        // Add CSS for error states
+        const errorStyles = document.createElement('style');
+        errorStyles.textContent = `
+            .form-group input.error,
+            .form-group textarea.error {
+                border-color: #ef4444 !important;
+                box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1) !important;
+            }
+            
+            .error-message {
+                color: #ef4444;
+                font-size: 0.8rem;
+                margin-top: 0.5rem;
+                animation: slideDown 0.3s ease;
+            }
+            
+            @keyframes slideDown {
+                from {
+                    opacity: 0;
+                    transform: translateY(-10px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            
+            /* Additional responsive improvements */
+            @media (max-width: 640px) {
+                .hero h1 {
+                    font-size: 2.5rem;
+                }
+                
+                .hero-buttons {
+                    flex-direction: column;
+                    align-items: stretch;
+                }
+                
+                .cta-button,
+                .cta-secondary {
+                    text-align: center;
+                    width: 100%;
+                }
+                
+                .portfolio-tabs,
+                .gallery-filter {
+                    flex-wrap: wrap;
+                    gap: 0.5rem;
+                }
+                
+                .tab-button,
+                .filter-button {
+                    padding: 0.6rem 1.2rem;
+                    font-size: 0.9rem;
+                }
+                
+                .stats-grid {
+                    grid-template-columns: 1fr 1fr;
+                    gap: 1rem;
+                }
+                
+                .stat-item {
+                    padding: 1.5rem 1rem;
+                }
+                
+                .contact-item {
+                    flex-direction: column;
+                    text-align: center;
+                }
+                
+                .contact-icon {
+                    margin-right: 0;
+                    margin-bottom: 1rem;
+                }
+            }
+            
+            /* Loading animation improvements */
+            .loader {
+                background: linear-gradient(135deg, #2c1810 0%, #1a1a1a 100%);
+            }
+            
+            .loader-text {
+                position: relative;
+                overflow: hidden;
+            }
+            
+            .loader-text::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.4), transparent);
+                animation: shimmer 2s infinite;
+            }
+            
+            @keyframes shimmer {
+                0% { left: -100%; }
+                100% { left: 100%; }
+            }
+            
+            /* Enhanced hover effects */
+            .nav-links a {
+                position: relative;
+                overflow: hidden;
+            }
+            
+            .nav-links a::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+                transition: left 0.5s ease;
+            }
+            
+            .nav-links a:hover::before {
+                left: 100%;
+            }
+            
+            /* Improved button animations */
+            .cta-button,
+            .submit-btn {
+                position: relative;
+                overflow: hidden;
+                transition: all 0.3s ease;
+            }
+            
+            .cta-button::after,
+            .submit-btn::after {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 0;
+                height: 0;
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 50%;
+                transform: translate(-50%, -50%);
+                transition: width 0.6s ease, height 0.6s ease;
+            }
+            
+            .cta-button:active::after,
+            .submit-btn:active::after {
+                width: 300px;
+                height: 300px;
+            }
+        `;
+        document.head.appendChild(errorStyles);
+
+        // Initialize all animations and interactions
+        document.addEventListener('DOMContentLoaded', () => {
+            // Add initial loading state
+            document.body.style.overflow = 'hidden';
+            
+            // Remove loading state after page loads
+            window.addEventListener('load', () => {
+                setTimeout(() => {
+                    document.body.style.overflow = '';
+                }, 2000);
+            });
+        });
+
+        console.log('Enhanced portfolio loaded successfully! 🎨✨');
     </script>
 </body>
-
 </html>
