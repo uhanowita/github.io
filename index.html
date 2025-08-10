@@ -75,6 +75,127 @@
             50% { opacity: 1; transform: scale(1.05); }
         }
 
+        /* Image Modal */
+        .image-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .image-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .image-modal-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .image-modal img {
+            max-width: 100%;
+            max-height: 80vh;
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .image-modal-info {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            max-width: 500px;
+        }
+
+        .image-modal-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .image-modal-description {
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            font-size: 2rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .modal-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            font-size: 2rem;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-nav:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .modal-nav.prev {
+            left: 2rem;
+        }
+
+        .modal-nav.next {
+            right: 2rem;
+        }
+
+        .modal-nav:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
         /* Navigation */
         nav {
             position: fixed;
@@ -482,7 +603,7 @@
             opacity: 0;
             transform: translateY(30px);
             position: relative;
-            group: true;
+            cursor: pointer;
         }
 
         .portfolio-item.animate {
@@ -539,6 +660,11 @@
             opacity: 0;
             transition: opacity 0.3s ease;
             z-index: 2;
+        }
+
+        .portfolio-overlay .view-icon {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
         }
 
         .portfolio-item:hover .portfolio-overlay {
@@ -633,6 +759,7 @@
             opacity: 0;
             transform: scale(0.9);
             position: relative;
+            cursor: pointer;
         }
 
         .gallery-item.animate {
@@ -649,7 +776,6 @@
             height: 280px;
             position: relative;
             overflow: hidden;
-            cursor: pointer;
             background: var(--gradient-primary);
         }
 
@@ -870,23 +996,24 @@
         }
 
         .contact-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: start;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
             position: relative;
             z-index: 2;
         }
 
         .contact-info {
             opacity: 0;
-            transform: translateX(-30px);
+            transform: translateY(30px);
             transition: all 0.8s ease;
+            max-width: 800px;
         }
 
         .contact-info.animate {
             opacity: 1;
-            transform: translateX(0);
+            transform: translateY(0);
         }
 
         .contact-info h3 {
@@ -896,34 +1023,41 @@
             color: var(--text-dark);
         }
 
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
         .contact-item {
             display: flex;
-            align-items: flex-start;
-            margin-bottom: 2rem;
-            padding: 1.5rem;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
             background: white;
             border-radius: 15px;
             box-shadow: var(--shadow-soft);
             transition: all 0.3s ease;
+            text-align: center;
         }
 
         .contact-item:hover {
-            transform: translateY(-3px);
+            transform: translateY(-5px);
             box-shadow: var(--shadow-strong);
         }
 
         .contact-icon {
-            width: 60px;
-            height: 60px;
+            width: 70px;
+            height: 70px;
             background: var(--gradient-primary);
             border-radius: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            margin-right: 1.5rem;
-            font-size: 1.5rem;
-            flex-shrink: 0;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
         }
 
         .contact-details strong {
@@ -931,6 +1065,7 @@
             font-weight: 600;
             display: block;
             margin-bottom: 0.5rem;
+            font-size: 1.1rem;
         }
 
         .contact-details {
@@ -938,66 +1073,42 @@
             line-height: 1.6;
         }
 
-        .contact-form {
+        .contact-cta {
+            margin-top: 3rem;
+            padding: 2rem;
             background: white;
-            padding: 3rem;
             border-radius: 20px;
-            box-shadow: var(--shadow-strong);
-            opacity: 0;
-            transform: translateX(30px);
-            transition: all 0.8s ease 0.3s;
+            box-shadow: var(--shadow-soft);
         }
 
-        .contact-form.animate {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        .form-group {
-            margin-bottom: 2rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.8rem;
-            font-weight: 600;
+        .contact-cta h4 {
+            font-size: 1.5rem;
             color: var(--text-dark);
+            margin-bottom: 1rem;
+            font-family: 'Playfair Display', serif;
         }
 
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 1rem 1.5rem;
-            border: 2px solid rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            font-family: inherit;
+        .contact-cta p {
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
         }
 
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 1.2rem 2rem;
+        .contact-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
             background: var(--gradient-primary);
             color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 1.1rem;
+            text-decoration: none;
+            border-radius: 50px;
             font-weight: 600;
-            cursor: pointer;
+            font-size: 1rem;
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
         }
 
-        .submit-btn::before {
+        .contact-button::before {
             content: '';
             position: absolute;
             top: 0;
@@ -1008,13 +1119,13 @@
             transition: left 0.5s ease;
         }
 
-        .submit-btn:hover::before {
+        .contact-button:hover::before {
             left: 100%;
         }
 
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+        .contact-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
         }
 
         /* Footer */
@@ -1056,13 +1167,16 @@
 
         /* Responsive Design */
         @media (max-width: 1024px) {
-            .about-content,
-            .contact-content {
+            .about-content {
                 grid-template-columns: 1fr;
                 gap: 3rem;
             }
 
             .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .contact-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
         }
@@ -1094,7 +1208,8 @@
                 grid-template-columns: 1fr;
             }
 
-            .stats-grid {
+            .stats-grid,
+            .contact-grid {
                 grid-template-columns: 1fr;
             }
 
@@ -1110,11 +1225,41 @@
 
             .about-text,
             .contact-info,
-            .contact-form,
             .stats-grid,
             .about-location {
                 transform: none;
                 opacity: 1;
+            }
+
+            .modal-nav {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+
+            .modal-nav.prev {
+                left: 1rem;
+            }
+
+            .modal-nav.next {
+                right: 1rem;
+            }
+
+            .modal-close {
+                top: 1rem;
+                right: 1rem;
+                width: 40px;
+                height: 40px;
+                font-size: 1.5rem;
+            }
+
+            .image-modal-content {
+                max-width: 95%;
+                max-height: 95%;
+            }
+
+            .image-modal img {
+                max-height: 70vh;
             }
         }
 
@@ -1131,24 +1276,21 @@
             }
 
             .cta-button,
-            .cta-secondary {
+            .cta-secondary,
+            .contact-button {
                 padding: 0.8rem 1.5rem;
                 font-size: 0.9rem;
             }
 
-            .contact-form {
-                padding: 2rem;
-            }
-
             .contact-item {
-                padding: 1rem;
+                padding: 1.5rem;
             }
 
             .contact-icon {
-                width: 50px;
-                height: 50px;
-                font-size: 1.2rem;
-                margin-right: 1rem;
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+                margin-bottom: 1rem;
             }
         }
 
@@ -1202,6 +1344,20 @@
     <!-- Loading Screen -->
     <div class="loader" id="loader">
         <div class="loader-text">G. Uhanowita</div>
+    </div>
+
+    <!-- Image Modal -->
+    <div class="image-modal" id="imageModal">
+        <button class="modal-close" onclick="closeImageModal()">×</button>
+        <button class="modal-nav prev" id="prevBtn" onclick="navigateImage(-1)">‹</button>
+        <button class="modal-nav next" id="nextBtn" onclick="navigateImage(1)">›</button>
+        <div class="image-modal-content">
+            <img id="modalImage" src="" alt="">
+            <div class="image-modal-info">
+                <h3 class="image-modal-title" id="modalTitle"></h3>
+                <p class="image-modal-description" id="modalDescription"></p>
+            </div>
+        </div>
     </div>
 
     <!-- Navigation -->
@@ -1310,12 +1466,12 @@
             </div>
 
             <div class="portfolio-grid" id="portfolioGrid">
-                <!-- TV Commercials -->
                 <div class="portfolio-item" data-category="commercials">
-                    <div class="portfolio-image">
-                        <img src="assets/photo1.jpg" alt="Lipton Ceylon Tea Commercial" onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>📸</div><div class=&quot;image-placeholder-text&quot;>Lipton Ceylon Tea<br>Commercial Photo</div></div>'">
+                    <div class="portfolio-image" onclick="openImageModal(this)">
+                        <img src="assets/photo1.jpg" alt="Lipton Ceylon Tea Commercial" data-title="Lipton Ceylon Tea" data-description="Brand commercial makeup focusing on natural beauty enhancement and authentic Sri Lankan elegance." onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>📸</div><div class=&quot;image-placeholder-text&quot;>Lipton Ceylon Tea<br>Commercial Photo</div></div>'">
                         <div class="portfolio-overlay">
-                            <h4>View Project</h4>
+                            <div class="view-icon">🔍</div>
+                            <h4>View Full Image</h4>
                         </div>
                     </div>
                     <div class="portfolio-content">
@@ -1331,10 +1487,11 @@
                 </div>
 
                 <div class="portfolio-item" data-category="commercials">
-                    <div class="portfolio-image">
-                        <img src="assets/photo2.jpg" alt="Coca Cola Campaign" onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>📸</div><div class=&quot;image-placeholder-text&quot;>Coca Cola<br>Campaign Photo</div></div>'">
+                    <div class="portfolio-image" onclick="openImageModal(this)">
+                        <img src="assets/photo2.jpg" alt="Coca Cola Campaign" data-title="Coca Cola Campaign" data-description="International brand campaign featuring youthful and vibrant makeup looks for diverse cast members." onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>📸</div><div class=&quot;image-placeholder-text&quot;>Coca Cola<br>Campaign Photo</div></div>'">
                         <div class="portfolio-overlay">
-                            <h4>View Project</h4>
+                            <div class="view-icon">🔍</div>
+                            <h4>View Full Image</h4>
                         </div>
                     </div>
                     <div class="portfolio-content">
@@ -1350,10 +1507,11 @@
                 </div>
 
                 <div class="portfolio-item" data-category="commercials">
-                    <div class="portfolio-image">
-                        <img src="assets/photo3.jpg" alt="Keells Super Commercial" onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>📸</div><div class=&quot;image-placeholder-text&quot;>Keells Super<br>Commercial Photo</div></div>'">
+                    <div class="portfolio-image" onclick="openImageModal(this)">
+                        <img src="assets/photo3.jpg" alt="Keells Super Commercial" data-title="Keells Super" data-description="Family-oriented retail campaign with emphasis on approachable and warm makeup styling." onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>📸</div><div class=&quot;image-placeholder-text&quot;>Keells Super<br>Commercial Photo</div></div>'">
                         <div class="portfolio-overlay">
-                            <h4>View Project</h4>
+                            <div class="view-icon">🔍</div>
+                            <h4>View Full Image</h4>
                         </div>
                     </div>
                     <div class="portfolio-content">
@@ -1370,10 +1528,11 @@
 
                 <!-- Films -->
                 <div class="portfolio-item" data-category="films">
-                    <div class="portfolio-image">
-                        <img src="assets/photo4.jpg" alt="Adaraneeya Wassanaya Film" onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>🎬</div><div class=&quot;image-placeholder-text&quot;>Adaraneeya Wassanaya<br>Film Production</div></div>'">
+                    <div class="portfolio-image" onclick="openImageModal(this)">
+                        <img src="assets/photo4.jpg" alt="Adaraneeya Wassanaya Film" data-title="Adaraneeya Wassanaya" data-description="Manjari Films production featuring complex character development and emotional storytelling through makeup." onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>🎬</div><div class=&quot;image-placeholder-text&quot;>Adaraneeya Wassanaya<br>Film Production</div></div>'">
                         <div class="portfolio-overlay">
-                            <h4>View Project</h4>
+                            <div class="view-icon">🔍</div>
+                            <h4>View Full Image</h4>
                         </div>
                     </div>
                     <div class="portfolio-content">
@@ -1389,10 +1548,11 @@
                 </div>
 
                 <div class="portfolio-item" data-category="films">
-                    <div class="portfolio-image">
-                        <img src="assets/photo5.jpg" alt="Heart FM Production" onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>📻</div><div class=&quot;image-placeholder-text&quot;>Heart FM<br>Production Photo</div></div>'">
+                    <div class="portfolio-image" onclick="openImageModal(this)">
+                        <img src="assets/photo5.jpg" alt="Heart FM Production" data-title="Heart FM" data-description="Radio station visual production with professional styling for media personalities and promotional content." onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>📻</div><div class=&quot;image-placeholder-text&quot;>Heart FM<br>Production Photo</div></div>'">
                         <div class="portfolio-overlay">
-                            <h4>View Project</h4>
+                            <div class="view-icon">🔍</div>
+                            <h4>View Full Image</h4>
                         </div>
                     </div>
                     <div class="portfolio-content">
@@ -1409,10 +1569,11 @@
 
                 <!-- Teledramas -->
                 <div class="portfolio-item" data-category="teledramas">
-                    <div class="portfolio-image">
-                        <img src="assets/photo6.jpg" alt="Itin Ita Passe Teledrama" onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>📺</div><div class=&quot;image-placeholder-text&quot;>Itin Ita Passe<br>Teledrama Photo</div></div>'">
+                    <div class="portfolio-image" onclick="openImageModal(this)">
+                        <img src="assets/photo6.jpg" alt="Itin Ita Passe Teledrama" data-title="Itin Ita Passe" data-description="Popular daily teledrama series requiring consistent character makeup and style continuity." onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>📺</div><div class=&quot;image-placeholder-text&quot;>Itin Ita Passe<br>Teledrama Photo</div></div>'">
                         <div class="portfolio-overlay">
-                            <h4>View Project</h4>
+                            <div class="view-icon">🔍</div>
+                            <h4>View Full Image</h4>
                         </div>
                     </div>
                     <div class="portfolio-content">
@@ -1428,10 +1589,11 @@
                 </div>
 
                 <div class="portfolio-item" data-category="teledramas">
-                    <div class="portfolio-image">
-                        <img src="assets/photo7.jpg" alt="Pahasara Teledrama" onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>📺</div><div class=&quot;image-placeholder-text&quot;>Pahasara<br>Period Drama Photo</div></div>'">
+                    <div class="portfolio-image" onclick="openImageModal(this)">
+                        <img src="assets/photo7.jpg" alt="Pahasara Teledrama" data-title="Pahasara" data-description="Period drama requiring historical accuracy in makeup design and authentic character portrayal." onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>📺</div><div class=&quot;image-placeholder-text&quot;>Pahasara<br>Period Drama Photo</div></div>'">
                         <div class="portfolio-overlay">
-                            <h4>View Project</h4>
+                            <div class="view-icon">🔍</div>
+                            <h4>View Full Image</h4>
                         </div>
                     </div>
                     <div class="portfolio-content">
@@ -1447,10 +1609,11 @@
                 </div>
 
                 <div class="portfolio-item" data-category="teledramas">
-                    <div class="portfolio-image">
-                        <img src="assets/photo8.jpg" alt="Bonda Meedum Teledrama" onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>📺</div><div class=&quot;image-placeholder-text&quot;>Bonda Meedum<br>Family Drama Photo</div></div>'">
+                    <div class="portfolio-image" onclick="openImageModal(this)">
+                        <img src="assets/photo8.jpg" alt="Bonda Meedum Teledrama" data-title="Bonda Meedum" data-description="Family drama series focusing on multi-generational character development and evolving relationships." onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>📺</div><div class=&quot;image-placeholder-text&quot;>Bonda Meedum<br>Family Drama Photo</div></div>'">
                         <div class="portfolio-overlay">
-                            <h4>View Project</h4>
+                            <div class="view-icon">🔍</div>
+                            <h4>View Full Image</h4>
                         </div>
                     </div>
                     <div class="portfolio-content">
@@ -1487,8 +1650,8 @@
 
             <div class="gallery-grid" id="galleryGrid">
                 <div class="gallery-item" data-category="commercial">
-                    <div class="gallery-image">
-                        <img src="assets/photo9.jpg" alt="Lipton Ceylon Tea Gallery" onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>📸</div><div class=&quot;image-placeholder-text&quot;>Gallery Photo 9</div></div>'">
+                    <div class="gallery-image" onclick="openImageModal(this)">
+                        <img src="assets/photo9.jpg" alt="Lipton Ceylon Tea Gallery" data-title="Lipton Ceylon Tea" data-description="Natural beauty enhancement for brand campaign" onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>📸</div><div class=&quot;image-placeholder-text&quot;>Gallery Photo 9</div></div>'">
                     </div>
                     <div class="gallery-content">
                         <h4 class="gallery-title">Lipton Ceylon Tea</h4>
@@ -1497,8 +1660,8 @@
                 </div>
 
                 <div class="gallery-item" data-category="film">
-                    <div class="gallery-image">
-                        <img src="assets/photo10.jpg" alt="Adaraneeya Wassanaya Gallery" onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>🎬</div><div class=&quot;image-placeholder-text&quot;>Gallery Photo 10</div></div>'">
+                    <div class="gallery-image" onclick="openImageModal(this)">
+                        <img src="assets/photo10.jpg" alt="Adaraneeya Wassanaya Gallery" data-title="Adaraneeya Wassanaya" data-description="Character development for film production" onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>🎬</div><div class=&quot;image-placeholder-text&quot;>Gallery Photo 10</div></div>'">
                     </div>
                     <div class="gallery-content">
                         <h4 class="gallery-title">Adaraneeya Wassanaya</h4>
@@ -1507,8 +1670,8 @@
                 </div>
 
                 <div class="gallery-item" data-category="teledrama">
-                    <div class="gallery-image">
-                        <img src="assets/photo11.jpg" alt="Pahasara Gallery" onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>📺</div><div class=&quot;image-placeholder-text&quot;>Gallery Photo 11</div></div>'">
+                    <div class="gallery-image" onclick="openImageModal(this)">
+                        <img src="assets/photo11.jpg" alt="Pahasara Gallery" data-title="Pahasara" data-description="Period drama historical accuracy" onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>📺</div><div class=&quot;image-placeholder-text&quot;>Gallery Photo 11</div></div>'">
                     </div>
                     <div class="gallery-content">
                         <h4 class="gallery-title">Pahasara</h4>
@@ -1516,19 +1679,9 @@
                     </div>
                 </div>
 
-                <div class="gallery-item" data-category="commercial">
-                    <div class="gallery-image">
-                        <img src="assets/photo12.jpg" alt="Coca Cola Campaign Gallery" onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>📸</div><div class=&quot;image-placeholder-text&quot;>Gallery Photo 12</div></div>'">
-                    </div>
-                    <div class="gallery-content">
-                        <h4 class="gallery-title">Coca Cola Campaign</h4>
-                        <p class="gallery-description">Youthful and vibrant makeup looks</p>
-                    </div>
-                </div>
-
                 <div class="gallery-item" data-category="bts">
-                    <div class="gallery-image">
-                        <img src="assets/photo13.jpg" alt="Behind the Scenes Gallery" onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>🎭</div><div class=&quot;image-placeholder-text&quot;>Gallery Photo 13</div></div>'">
+                    <div class="gallery-image" onclick="openImageModal(this)">
+                        <img src="assets/photo13.jpg" alt="Behind the Scenes Gallery" data-title="Behind the Scenes" data-description="Makeup application process" onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>🎭</div><div class=&quot;image-placeholder-text&quot;>Gallery Photo 13</div></div>'">
                     </div>
                     <div class="gallery-content">
                         <h4 class="gallery-title">Behind the Scenes</h4>
@@ -1537,8 +1690,8 @@
                 </div>
 
                 <div class="gallery-item" data-category="teledrama">
-                    <div class="gallery-image">
-                        <img src="assets/photo14.jpg" alt="Itin Ita Passe Gallery" onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>📺</div><div class=&quot;image-placeholder-text&quot;>Gallery Photo 14</div></div>'">
+                    <div class="gallery-image" onclick="openImageModal(this)">
+                        <img src="assets/photo14.jpg" alt="Itin Ita Passe Gallery" data-title="Itin Ita Passe" data-description="Daily series makeup consistency" onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>📺</div><div class=&quot;image-placeholder-text&quot;>Gallery Photo 14</div></div>'">
                     </div>
                     <div class="gallery-content">
                         <h4 class="gallery-title">Itin Ita Passe</h4>
@@ -1547,8 +1700,8 @@
                 </div>
 
                 <div class="gallery-item" data-category="film">
-                    <div class="gallery-image">
-                        <img src="assets/photo15.jpg" alt="Heart FM Production Gallery" onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>📻</div><div class=&quot;image-placeholder-text&quot;>Gallery Photo 15</div></div>'">
+                    <div class="gallery-image" onclick="openImageModal(this)">
+                        <img src="assets/photo15.jpg" alt="Heart FM Production Gallery" data-title="Heart FM Production" data-description="Professional media styling" onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>📻</div><div class=&quot;image-placeholder-text&quot;>Gallery Photo 15</div></div>'">
                     </div>
                     <div class="gallery-content">
                         <h4 class="gallery-title">Heart FM Production</h4>
@@ -1557,8 +1710,8 @@
                 </div>
 
                 <div class="gallery-item" data-category="commercial">
-                    <div class="gallery-image">
-                        <img src="assets/photo16.jpg" alt="Keells Super Gallery" onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>📸</div><div class=&quot;image-placeholder-text&quot;>Gallery Photo 16</div></div>'">
+                    <div class="gallery-image" onclick="openImageModal(this)">
+                        <img src="assets/photo16.jpg" alt="Keells Super Gallery" data-title="Keells Super" data-description="Family-friendly commercial styling" onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>📸</div><div class=&quot;image-placeholder-text&quot;>Gallery Photo 16</div></div>'">
                     </div>
                     <div class="gallery-content">
                         <h4 class="gallery-title">Keells Super</h4>
@@ -1567,8 +1720,8 @@
                 </div>
 
                 <div class="gallery-item" data-category="bts">
-                    <div class="gallery-image">
-                        <img src="assets/photo17.jpg" alt="Makeup Process Gallery" onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>🎭</div><div class=&quot;image-placeholder-text&quot;>Gallery Photo 17</div></div>'">
+                    <div class="gallery-image" onclick="openImageModal(this)">
+                        <img src="assets/photo17.jpg" alt="Makeup Process Gallery" data-title="Makeup Process" data-description="Artist at work behind the scenes" onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>🎭</div><div class=&quot;image-placeholder-text&quot;>Gallery Photo 17</div></div>'">
                     </div>
                     <div class="gallery-content">
                         <h4 class="gallery-title">Makeup Process</h4>
@@ -1577,8 +1730,8 @@
                 </div>
 
                 <div class="gallery-item" data-category="bts">
-                    <div class="gallery-image">
-                        <img src="assets/photo18.jpg" alt="Studio Work Gallery" onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>🎭</div><div class=&quot;image-placeholder-text&quot;>Gallery Photo 18</div></div>'">
+                    <div class="gallery-image" onclick="openImageModal(this)">
+                        <img src="assets/photo18.jpg" alt="Studio Work Gallery" data-title="Studio Work" data-description="Professional makeup application" onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>🎭</div><div class=&quot;image-placeholder-text&quot;>Gallery Photo 18</div></div>'">
                     </div>
                     <div class="gallery-content">
                         <h4 class="gallery-title">Studio Work</h4>
@@ -1587,8 +1740,8 @@
                 </div>
 
                 <div class="gallery-item" data-category="teledrama">
-                    <div class="gallery-image">
-                        <img src="assets/photo19.jpg" alt="Character Makeup Gallery" onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>📺</div><div class=&quot;image-placeholder-text&quot;>Gallery Photo 19</div></div>'">
+                    <div class="gallery-image" onclick="openImageModal(this)">
+                        <img src="assets/photo19.jpg" alt="Character Makeup Gallery" data-title="Character Makeup" data-description="Detailed character transformation" onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>📺</div><div class=&quot;image-placeholder-text&quot;>Gallery Photo 19</div></div>'">
                     </div>
                     <div class="gallery-content">
                         <h4 class="gallery-title">Character Makeup</h4>
@@ -1597,8 +1750,8 @@
                 </div>
 
                 <div class="gallery-item" data-category="film">
-                    <div class="gallery-image">
-                        <img src="assets/photo20.jpg" alt="Film Set Gallery" onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>🎬</div><div class=&quot;image-placeholder-text&quot;>Gallery Photo 20</div></div>'">
+                    <div class="gallery-image" onclick="openImageModal(this)">
+                        <img src="assets/photo20.jpg" alt="Film Set Gallery" data-title="Film Set" data-description="On-location makeup artistry" onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;><div class=&quot;image-placeholder-icon&quot;>🎬</div><div class=&quot;image-placeholder-text&quot;>Gallery Photo 20</div></div>'">
                     </div>
                     <div class="gallery-content">
                         <h4 class="gallery-title">Film Set</h4>
@@ -1620,65 +1773,47 @@
             <div class="contact-content">
                 <div class="contact-info">
                     <h3>Get In Touch</h3>
-                    <div class="contact-item">
-                        <div class="contact-icon">📱</div>
-                        <div class="contact-details">
-                            <strong>Phone</strong>
-                            077 717 8787
+                    <div class="contact-grid">
+                        <div class="contact-item">
+                            <div class="contact-icon">📱</div>
+                            <div class="contact-details">
+                                <strong>Phone</strong>
+                                077 717 8787
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">📍</div>
+                            <div class="contact-details">
+                                <strong>Location</strong>
+                                182/62, Mavilhena<br>
+                                Kindelpitiya, Bandaragama<br>
+                                Sri Lanka
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">💄</div>
+                            <div class="contact-details">
+                                <strong>Services</strong>
+                                TV Commercials • Films<br>
+                                Teledramas • Special Events<br>
+                                Character Design • Beauty Enhancement
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">⏰</div>
+                            <div class="contact-details">
+                                <strong>Availability</strong>
+                                Available for projects<br>
+                                Professional consultations<br>
+                                On-location services
+                            </div>
                         </div>
                     </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">📍</div>
-                        <div class="contact-details">
-                            <strong>Location</strong>
-                            182/62, Mavilhena<br>
-                            Kindelpitiya, Bandaragama<br>
-                            Sri Lanka
-                        </div>
+                    <div class="contact-cta">
+                        <h4>Ready to Start Your Project?</h4>
+                        <p>Contact me directly to discuss your vision, timeline, and creative requirements. I'm always excited to collaborate on new projects and bring characters to life.</p>
+                        <a href="tel:+94777178787" class="contact-button">Call Now: 077 717 8787</a>
                     </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">💄</div>
-                        <div class="contact-details">
-                            <strong>Services</strong>
-                            TV Commercials • Films<br>
-                            Teledramas • Special Events<br>
-                            Character Design • Beauty Enhancement
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">⏰</div>
-                        <div class="contact-details">
-                            <strong>Availability</strong>
-                            Available for projects<br>
-                            Professional consultations<br>
-                            On-location services
-                        </div>
-                    </div>
-                </div>
-                <div class="contact-form">
-                    <form id="contactForm">
-                        <div class="form-group">
-                            <label for="name">Full Name</label>
-                            <input type="text" id="name" name="name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email Address</label>
-                            <input type="email" id="email" name="email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="project">Project Type</label>
-                            <input type="text" id="project" name="project" placeholder="e.g., TV Commercial, Film, Teledrama">
-                        </div>
-                        <div class="form-group">
-                            <label for="budget">Budget Range (Optional)</label>
-                            <input type="text" id="budget" name="budget" placeholder="e.g., $1000-$5000">
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Project Details</label>
-                            <textarea id="message" name="message" rows="5" placeholder="Tell me about your project, timeline, and vision..." required></textarea>
-                        </div>
-                        <button type="submit" class="submit-btn">Send Message</button>
-                    </form>
                 </div>
             </div>
         </div>
@@ -1693,6 +1828,134 @@
     </footer>
 
     <script>
+        // Global variables for image modal
+        let currentImageIndex = 0;
+        let currentImages = [];
+        let currentSection = '';
+
+        // Image Modal Functions
+        function openImageModal(element) {
+            const modal = document.getElementById('imageModal');
+            const modalImage = document.getElementById('modalImage');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalDescription = document.getElementById('modalDescription');
+            
+            // Get image data
+            const img = element.querySelector('img');
+            const title = img.getAttribute('data-title') || img.alt;
+            const description = img.getAttribute('data-description') || '';
+            
+            // Determine which section we're in and collect all images
+            const portfolioItem = element.closest('.portfolio-item');
+            const galleryItem = element.closest('.gallery-item');
+            
+            if (portfolioItem) {
+                currentSection = 'portfolio';
+                const activeCategory = document.querySelector('.tab-button.active').dataset.category;
+                currentImages = Array.from(document.querySelectorAll('.portfolio-item')).filter(item => {
+                    return activeCategory === 'all' || item.dataset.category === activeCategory;
+                }).map(item => {
+                    const imgEl = item.querySelector('img');
+                    return {
+                        src: imgEl.src,
+                        title: imgEl.getAttribute('data-title') || imgEl.alt,
+                        description: imgEl.getAttribute('data-description') || '',
+                        element: item
+                    };
+                });
+                currentImageIndex = currentImages.findIndex(item => item.element === portfolioItem);
+            } else if (galleryItem) {
+                currentSection = 'gallery';
+                const activeFilter = document.querySelector('.filter-button.active').dataset.filter;
+                currentImages = Array.from(document.querySelectorAll('.gallery-item')).filter(item => {
+                    return activeFilter === 'all' || item.dataset.category === activeFilter;
+                }).map(item => {
+                    const imgEl = item.querySelector('img');
+                    return {
+                        src: imgEl.src,
+                        title: imgEl.getAttribute('data-title') || imgEl.alt,
+                        description: imgEl.getAttribute('data-description') || '',
+                        element: item
+                    };
+                });
+                currentImageIndex = currentImages.findIndex(item => item.element === galleryItem);
+            }
+            
+            // Set modal content
+            modalImage.src = img.src;
+            modalImage.alt = title;
+            modalTitle.textContent = title;
+            modalDescription.textContent = description;
+            
+            // Update navigation buttons
+            updateNavigationButtons();
+            
+            // Show modal
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeImageModal() {
+            const modal = document.getElementById('imageModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function navigateImage(direction) {
+            currentImageIndex += direction;
+            
+            // Wrap around if at boundaries
+            if (currentImageIndex >= currentImages.length) {
+                currentImageIndex = 0;
+            } else if (currentImageIndex < 0) {
+                currentImageIndex = currentImages.length - 1;
+            }
+            
+            // Update modal content
+            const currentImage = currentImages[currentImageIndex];
+            const modalImage = document.getElementById('modalImage');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalDescription = document.getElementById('modalDescription');
+            
+            modalImage.src = currentImage.src;
+            modalImage.alt = currentImage.title;
+            modalTitle.textContent = currentImage.title;
+            modalDescription.textContent = currentImage.description;
+            
+            updateNavigationButtons();
+        }
+
+        function updateNavigationButtons() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            // Show/hide navigation buttons based on number of images
+            if (currentImages.length <= 1) {
+                prevBtn.style.display = 'none';
+                nextBtn.style.display = 'none';
+            } else {
+                prevBtn.style.display = 'flex';
+                nextBtn.style.display = 'flex';
+            }
+        }
+
+        // Close modal on escape key or background click
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeImageModal();
+            } else if (e.key === 'ArrowLeft') {
+                navigateImage(-1);
+            } else if (e.key === 'ArrowRight') {
+                navigateImage(1);
+            }
+        });
+
+        document.getElementById('imageModal').addEventListener('click', (e) => {
+            if (e.target.id === 'imageModal') {
+                closeImageModal();
+            }
+        });
+
         // Page Loading
         window.addEventListener('load', () => {
             const loader = document.getElementById('loader');
@@ -1790,7 +2053,7 @@
             }, observerOptions);
 
             // Observe elements with animation classes
-            document.querySelectorAll('.section-header, .about-text, .stats-grid, .about-location, .contact-info, .contact-form, .portfolio-item, .gallery-item').forEach(el => {
+            document.querySelectorAll('.section-header, .about-text, .stats-grid, .about-location, .contact-info, .portfolio-item, .gallery-item').forEach(el => {
                 observer.observe(el);
             });
         }
@@ -1878,47 +2141,18 @@
             });
         });
 
-        // Form submission
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Show success message
-            const submitBtn = this.querySelector('.submit-btn');
-            const originalText = submitBtn.textContent;
-            
-            submitBtn.textContent = 'Sending...';
-            submitBtn.disabled = true;
-            
-            setTimeout(() => {
-                submitBtn.textContent = 'Message Sent! ✓';
-                submitBtn.style.background = '#10b981';
-                
-                setTimeout(() => {
-                    submitBtn.textContent = originalText;
-                    submitBtn.disabled = false;
-                    submitBtn.style.background = '';
-                    this.reset();
-                }, 3000);
-            }, 1500);
-        });
-
-        // Mobile menu toggle (if needed for future enhancement)
-        const mobileMenu = document.querySelector('.mobile-menu');
-        if (mobileMenu) {
-            mobileMenu.addEventListener('click', () => {
-                // Add mobile menu functionality here
-                console.log('Mobile menu clicked');
-            });
-        }
-
         // Add some interactive hover effects
         document.querySelectorAll('.portfolio-item, .gallery-item').forEach(item => {
             item.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-10px) scale(1.02)';
+                if (window.innerWidth > 768) { // Only on desktop
+                    this.style.transform = 'translateY(-10px) scale(1.02)';
+                }
             });
             
             item.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0) scale(1)';
+                if (window.innerWidth > 768) { // Only on desktop
+                    this.style.transform = 'translateY(0) scale(1)';
+                }
             });
         });
 
@@ -1926,10 +2160,12 @@
         window.addEventListener('scroll', () => {
             const scrolled = window.pageYOffset;
             const parallaxElements = document.querySelectorAll('.hero-content');
-            const speed = scrolled * 0.5;
+            const speed = scrolled * 0.3;
             
             parallaxElements.forEach(element => {
-                element.style.transform = `translateY(${speed}px)`;
+                if (window.innerWidth > 768) { // Only on desktop
+                    element.style.transform = `translateY(${speed}px)`;
+                }
             });
         });
 
@@ -1994,69 +2230,13 @@
             statsObserver.observe(statsSection);
         }
 
-        // Enhanced form validation
-        const form = document.getElementById('contactForm');
-        const inputs = form.querySelectorAll('input, textarea');
-        
-        inputs.forEach(input => {
-            input.addEventListener('blur', validateField);
-            input.addEventListener('input', clearErrors);
-        });
-
-        function validateField(e) {
-            const field = e.target;
-            const value = field.value.trim();
-            
-            // Remove existing error styling
-            field.classList.remove('error');
-            
-            // Validate based on field type
-            if (field.hasAttribute('required') && !value) {
-                showFieldError(field, 'This field is required');
-                return false;
-            }
-            
-            if (field.type === 'email' && value) {
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailRegex.test(value)) {
-                    showFieldError(field, 'Please enter a valid email address');
-                    return false;
-                }
-            }
-            
-            return true;
-        }
-
-        function showFieldError(field, message) {
-            field.classList.add('error');
-            
-            // Add error styling
-            field.style.borderColor = '#ef4444';
-            field.style.boxShadow = '0 0 0 3px rgba(239, 68, 68, 0.1)';
-            
-            // Show error message
-            let errorDiv = field.parentNode.querySelector('.error-message');
-            if (!errorDiv) {
-                errorDiv = document.createElement('div');
-                errorDiv.className = 'error-message';
-                errorDiv.style.color = '#ef4444';
-                errorDiv.style.fontSize = '0.8rem';
-                errorDiv.style.marginTop = '0.5rem';
-                field.parentNode.appendChild(errorDiv);
-            }
-            errorDiv.textContent = message;
-        }
-
-        function clearErrors(e) {
-            const field = e.target;
-            field.classList.remove('error');
-            field.style.borderColor = '';
-            field.style.boxShadow = '';
-            
-            const errorDiv = field.parentNode.querySelector('.error-message');
-            if (errorDiv) {
-                errorDiv.remove();
-            }
+        // Mobile menu toggle (if needed for future enhancement)
+        const mobileMenu = document.querySelector('.mobile-menu');
+        if (mobileMenu) {
+            mobileMenu.addEventListener('click', () => {
+                // Add mobile menu functionality here
+                console.log('Mobile menu clicked');
+            });
         }
 
         // Initialize all animations and interactions
@@ -2072,11 +2252,7 @@
             });
         });
 
-        console.log('Enhanced portfolio loaded successfully! 🎨✨');
+        console.log('Enhanced portfolio with image viewer loaded successfully! 🎨✨');
     </script>
 </body>
 </html>
-
-
-
-
